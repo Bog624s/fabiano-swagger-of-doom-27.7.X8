@@ -84,15 +84,14 @@ namespace wServer.realm.entities
 
         public void Feed(IFeedable petFoodNOMNOMNOM)
         {
-            FirstPetLevel.Incease(petFoodNOMNOMNOM);
-            SecondPetLevel.Incease(petFoodNOMNOMNOM);
-            ThirdPetLevel.Incease(petFoodNOMNOMNOM);
+            FirstPetLevel.Increase(petFoodNOMNOMNOM);
+            SecondPetLevel.Increase(petFoodNOMNOMNOM);
+            ThirdPetLevel.Increase(petFoodNOMNOMNOM);
 
             Manager.Database.DoActionAsync(db =>
             {
                 MySqlCommand cmd = db.CreateQuery();
-                cmd.CommandText =
-                    "UPDATE pets SET levels=@newLevels, xp=@newXp WHERE petId=@petId AND accId=@accId";
+                cmd.CommandText = "UPDATE pets SET levels=@newLevels, xp=@newXp WHERE petId=@petId AND accId=@accId";
                 cmd.Parameters.AddWithValue("@petId", PetId);
                 cmd.Parameters.AddWithValue("@accId", Owner.Players.ToArray()[0].Value.AccountId);
                 cmd.Parameters.AddWithValue("@newLevels",

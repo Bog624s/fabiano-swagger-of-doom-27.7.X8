@@ -145,7 +145,7 @@ namespace wServer.realm
         public int Power { get; private set; }
         public Ability Ability { get; private set; }
 
-        public void Incease(IFeedable petFoodNOMNOMNOM)
+        public void Increase(IFeedable petFoodNOMNOMNOM)
         {
             int remaining = petFoodNOMNOMNOM.FeedPower;
 

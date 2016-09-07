@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using db.data;
-using Ionic.Zlib;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 
 #endregion
 
@@ -1091,15 +1089,14 @@ VALUES(@accId, @chrId, @name, @objType, @tex1, @tex2, @skin, @items, @fame, @exp
             switch (type)
             {
                 case "alltime":
-                    cmd.CommandText = "SELECT * FROM arenalb ORDER BY wave DESC LIMIT 20";
+                    cmd.CommandText = "SELECT * FROM arenalb ORDER BY wave DESC, time ASC LIMIT 20";
                     break;
                 case "weekly":
-                    cmd.CommandText =
-                        "SELECT * FROM arenalb WHERE date BETWEEN date_sub(now(), INTERVAL 1 WEEK) AND NOW() ORDER BY wave DESC LIMIT 20";
+                    cmd.CommandText = "SELECT * FROM arenalb WHERE date BETWEEN date_sub(now(), INTERVAL 1 WEEK) AND NOW() ORDER BY wave DESC, time ASC LIMIT 20";
                     break;
                 case "personal":
-                    cmd.CommandText = "SELECT * FROM arenalb WHERE accid = @accid ORDER BY wave DESC LIMIT 20";
-                    cmd.Parameters.AddWithValue("@acc", acc.AccountId);
+                    cmd.CommandText = "SELECT * FROM arenalb WHERE accid = @accid ORDER BY wave DESC, time ASC LIMIT 20";
+                    cmd.Parameters.AddWithValue("@accid", acc.AccountId);
                     break;
                 default:
                     return null;
