@@ -81,10 +81,6 @@
       <Project>{c400fdd3-6250-4f9b-9516-b3463d6761f5}</Project>
       <Name>terrain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\terrain\terrain.csproj">
-      <Project>{c400fdd3-6250-4f9b-9516-b3463d6761f5}</Project>
-      <Name>terrain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
