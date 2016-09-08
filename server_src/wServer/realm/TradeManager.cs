@@ -118,7 +118,7 @@ namespace wServer.realm
 
         public void AcceptTrade(Player sender, AcceptTradePacket pkt)
         {
-            if (sender == player1)
+            if(sender == player1)
             {
                 if (pkt.MyOffers.SequenceEqual(player1Trades) && pkt.YourOffers.SequenceEqual(player2Trades))
                 {
@@ -212,7 +212,7 @@ namespace wServer.realm
                 {
                     if (player1.Inventory[i] == null)
                     {
-                        foreach (Item item in toTakeFromPlayer2)
+                        foreach (var item in toTakeFromPlayer2)
                         {
                             if (player1.SlotTypes[i] != 10 && player1.SlotTypes[i] != item.SlotType) continue;
                             else
@@ -229,7 +229,7 @@ namespace wServer.realm
                 {
                     if (player2.Inventory[i] == null)
                     {
-                        foreach (Item item in toTakeFromPlayer1)
+                        foreach (var item in toTakeFromPlayer1)
                         {
                             if (player2.SlotTypes[i] != 10 && player2.SlotTypes[i] != item.SlotType) continue;
                             else
@@ -249,6 +249,11 @@ namespace wServer.realm
 
             player1.SaveToCharacter();
             player2.SaveToCharacter();
+            await Task.Run(async () =>
+            {
+                await player1.Client.Save();
+                await player2.Client.Save();
+            });
         }
 
         private void TradeError()

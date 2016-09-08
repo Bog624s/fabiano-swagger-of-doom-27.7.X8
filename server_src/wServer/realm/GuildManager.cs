@@ -16,7 +16,7 @@ namespace wServer.realm
 
         public static GuildManager Add(Player player, Guild guildStruct)
         {
-            if (guildStruct == null) return null;
+            if(guildStruct == null) return null;
             GuildManager ret = null;
             if (CurrentManagers.ContainsKey(guildStruct.Name))
             {
@@ -40,9 +40,9 @@ namespace wServer.realm
 
         public static void Tick(RealmTime time)
         {
-            foreach (KeyValuePair<string, GuildManager> i in CurrentManagers)
+            foreach (var i in CurrentManagers)
             {
-                foreach (Player p in i.Value)
+                foreach (var p in i.Value)
                 {
                     if (!p.Manager.Clients.ContainsKey(p.AccountId))
                     {
@@ -57,7 +57,7 @@ namespace wServer.realm
 
         public static void RemovePlayerWithId(string accId)
         {
-            foreach (GuildManager i in CurrentManagers.Select(_ => _.Value))
+            foreach (var i in CurrentManagers.Select(_ => _.Value))
             {
                 if (i.Contains(accId))
                     i.Remove(accId);
@@ -197,6 +197,6 @@ namespace wServer.realm
             }
         }
 
-        public bool IsDefault { get { return _guildStructs.Values.ToArray()[0].Name == ""; } }
+        public bool IsDefault{ get { return _guildStructs.Values.ToArray()[0].Name == ""; } }
     }
 }

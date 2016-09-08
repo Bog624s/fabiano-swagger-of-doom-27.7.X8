@@ -13,7 +13,7 @@ namespace wServer.realm
 {
     public class RealmPortalMonitor
     {
-        private static readonly ILog log = LogManager.GetLogger(nameof(RealmPortalMonitor));
+        private static readonly ILog log = LogManager.GetLogger(typeof (RealmPortalMonitor));
 
         private readonly RealmManager manager;
         private readonly Nexus nexus;
@@ -45,7 +45,7 @@ namespace wServer.realm
             } while (
                 portals.Values.Any(_ => _.X == x && _.Y == y) ||
                 nexus.Map[x, y].Region != TileRegion.Realm_Portals);
-            return new Position { X = x, Y = y };
+            return new Position {X = x, Y = y};
         }
 
         public void WorldAdded(World world)
@@ -62,7 +62,7 @@ namespace wServer.realm
                 portal.Move(pos.X + 0.5f, pos.Y + 0.5f);
                 nexus.EnterWorld(portal);
                 portals.Add(world, portal);
-                log.InfoFormat($"World {world.Id}({world.Name}) added to monitor.");
+                log.InfoFormat("World {0}({1}) added to monitor.", world.Id, world.Name);
             }
         }
 
@@ -77,7 +77,7 @@ namespace wServer.realm
                     RealmManager.Realms.Add(portal.PortalName);
                     RealmManager.CurrentRealmNames.Remove(portal.PortalName);
                     portals.Remove(world);
-                    log.InfoFormat($"World {world.Id}({world.Name}) removed from monitor.");
+                    log.InfoFormat("World {0}({1}) removed from monitor.", world.Id, world.Name);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace wServer.realm
                 Portal portal = portals[world];
                 nexus.LeaveWorld(portal);
                 portals.Remove(world);
-                log.InfoFormat($"World {world.Id}({world.Name}) closed.");
+                log.InfoFormat("World {0}({1}) closed.", world.Id, world.Name);
             }
         }
 
@@ -107,7 +107,7 @@ namespace wServer.realm
                 portal.Move(pos.X, pos.Y);
                 nexus.EnterWorld(portal);
                 portals.Add(world, portal);
-                log.InfoFormat($"World {world.Id}({world.Name}) opened.");
+                log.InfoFormat("World {0}({1}) opened.", world.Id, world.Name);
             }
         }
 
@@ -118,7 +118,7 @@ namespace wServer.realm
                 World[] worlds = portals.Keys.ToArray();
                 if (worlds.Length == 0)
                     return manager.Worlds[World.NEXUS_ID];
-                return worlds[Environment.TickCount % worlds.Length];
+                return worlds[Environment.TickCount%worlds.Length];
             }
         }
     }
