@@ -5,6 +5,7 @@
 ##Additional License information
 
 - GhostMaree
+- BlackRayquaza
 
 Client Src:
 - kaos00723 (Kaos)

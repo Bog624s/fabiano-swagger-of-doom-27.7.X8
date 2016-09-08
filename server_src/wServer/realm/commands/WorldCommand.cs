@@ -248,7 +248,7 @@ namespace wServer.realm.commands
                         CleanText = ""
                     });
 
-                    player.Manager.Database.DoActionAsync(db =>
+                    player.Manager.Database.AddDatabaseOperation(db =>
                     {
                         var cmd = db.CreateQuery();
                         cmd.CommandText = "UPDATE accounts SET publicMuledump=0 WHERE id=@accId;";
@@ -278,7 +278,7 @@ namespace wServer.realm.commands
                         Text = msg.ToSafeText(),
                         CleanText = ""
                     });
-                    player.Manager.Database.DoActionAsync(db =>
+                    player.Manager.Database.AddDatabaseOperation(db =>
                     {
                         var cmd = db.CreateQuery();
                         cmd.CommandText = "UPDATE accounts SET publicMuledump=1 WHERE id=@accId;";

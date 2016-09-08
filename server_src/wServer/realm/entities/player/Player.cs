@@ -93,7 +93,7 @@ namespace wServer.realm.entities.player
                 Ignored = psr.Account.Ignored ?? new List<string>();
                 try
                 {
-                    Manager.Database.DoActionAsync(db =>
+                    Manager.Database.AddDatabaseOperation(db =>
                     {
                         Locked = db.GetLockeds(AccountId);
                         Ignored = db.GetIgnoreds(AccountId);
@@ -495,7 +495,7 @@ namespace wServer.realm.entities.player
 
             try
             {
-                Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                 {
                     Client.Character.Dead = true;
                     SaveToCharacter();
@@ -578,7 +578,7 @@ namespace wServer.realm.entities.player
             WorldTimer[] accTimer = {null};
             owner.Timers.Add(accTimer[0] = new WorldTimer(5000, (w, t) =>
             {
-                Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                 {
                     if (Client?.Account == null) return;
                     Client.Account = db.GetAccount(AccountId, Manager.GameData);
@@ -597,7 +597,7 @@ namespace wServer.realm.entities.player
                 pingTimer[0].Reset();
                 Manager.Logic.AddPendingAction(_ => w.Timers.Add(pingTimer[0]), PendingPriority.Creation);
             }));
-            Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 db.UpdateLastSeen(Client.Account.AccountId, Client.Character.CharacterId, owner.Name);
                 db.LockAccount(Client.Account);
@@ -753,7 +753,7 @@ namespace wServer.realm.entities.player
                         Owner.LeaveWorld(this);
                     else
                         WorldInstance.LeaveWorld(this);
-                    Manager.Database.DoActionAsync(db => db.UnlockAccount(Client.Account));
+                    Manager.Database.AddDatabaseOperation(db => db.UnlockAccount(Client.Account));
                     return;
                 }
                 if (Client.Stage == ProtocalStage.Disconnected || (!Client.Account.VerifiedEmail && Program.Verify))
@@ -762,7 +762,7 @@ namespace wServer.realm.entities.player
                         Owner.LeaveWorld(this);
                     else
                         WorldInstance.LeaveWorld(this);
-                    Manager.Database.DoActionAsync(db => db.UnlockAccount(Client.Account));
+                    Manager.Database.AddDatabaseOperation(db => db.UnlockAccount(Client.Account));
                     return;
                 }
             }

@@ -88,7 +88,7 @@ namespace wServer.realm.entities
             SecondPetLevel.Increase(petFoodNOMNOMNOM);
             ThirdPetLevel.Increase(petFoodNOMNOMNOM);
 
-            Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 MySqlCommand cmd = db.CreateQuery();
                 cmd.CommandText = "UPDATE pets SET levels=@newLevels, xp=@newXp WHERE petId=@petId AND accId=@accId";
@@ -184,9 +184,9 @@ namespace wServer.realm.entities
             base.Tick(time);
         }
 
-        public static async void Create(RealmManager manager, Player player, Item egg)
+        public static void Create(RealmManager manager, Player player, Item egg)
         {
-            await manager.Database.DoActionAsync(db =>
+            manager.Database.AddDatabaseOperation(db =>
             {
                 PetStruct petStruct = GetPetStruct(manager, egg.Family, (Rarity)egg.Rarity);
                 PetSkin skin = manager.GameData.IdToPetSkin[petStruct.DefaultSkin];

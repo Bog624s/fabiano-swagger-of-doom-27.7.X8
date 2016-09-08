@@ -89,7 +89,7 @@ namespace wServer.realm.entities.merchant
 
         public override void Buy(Player player)
         {
-            Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 if (ObjectType == 0x01ca) //Merchant
                 {

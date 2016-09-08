@@ -1,4 +1,6 @@
-﻿using db;
+﻿#region
+
+using db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,8 @@ using wServer.networking.cliPackets;
 using wServer.networking.svrPackets;
 using wServer.realm.entities;
 using wServer.realm.worlds;
+
+#endregion
 
 namespace wServer.networking.handlers
 {
@@ -22,7 +26,7 @@ namespace wServer.networking.handlers
         {
             client.Manager.Logic.AddPendingAction(t =>
             {
-                client.Manager.Database.DoActionAsync(db =>
+                client.Manager.Database.AddDatabaseOperation(db =>
                 {
                     if (!(client.Player.Owner is PetYard)) return;
                     var pet = ((PetYard)client.Player.Owner).FindPetById((int)packet.PetId);

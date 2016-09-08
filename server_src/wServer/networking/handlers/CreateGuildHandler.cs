@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,8 @@ using wServer.networking.svrPackets;
 using db;
 using wServer.realm.entities;
 using wServer.realm.entities.player;
+
+#endregion
 
 namespace wServer.networking.handlers
 {
@@ -24,7 +28,7 @@ namespace wServer.networking.handlers
         {
             try
             {
-                client.Manager.Database.DoActionAsync(db =>
+                client.Manager.Database.AddDatabaseOperation(db =>
                 {
                     Player player = client.Player;
                     var name = packet.Name.ToString();

@@ -10,7 +10,8 @@ namespace wServer.logic
 {
     public abstract class Behavior : IStateChildren
     {
-        [ThreadStatic] private static Random rand;
+        [ThreadStatic]
+        private static Random rand;
         private static int randomCount = 0;
         public static ILog log = LogManager.GetLogger(typeof(Behavior));
 
@@ -46,8 +47,7 @@ namespace wServer.logic
             }
             catch (Exception e)
             {
-                log.ErrorFormat("BehaviorException:\nHost: {0}\nState: {1}\nInternalExeption:\n{2}",
-                    host.Manager.GameData.ObjectTypeToId[host.ObjectType], state, e);
+                log.ErrorFormat($"BehaviorException:\nHost: {host.Manager.GameData.ObjectTypeToId[host.ObjectType]}\nState: {state}\nInternalExeption:\n{e}");
             }
         }
 

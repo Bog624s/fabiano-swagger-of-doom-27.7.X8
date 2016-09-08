@@ -172,12 +172,12 @@ namespace wServer.realm
             Monitor.WorldRemoved(world);
         }
 
-        public async void Disconnect(Client client)
+        public void Disconnect(Client client)
         {
             if (client == null) return;
             Client dummy;
             client.Disconnect();
-            await client.Save();
+            client.Save();
             while (!Clients.TryRemove(client.Account.AccountId, out dummy) && Clients.ContainsKey(client.Account.AccountId));
             client.Dispose();
         }
@@ -283,7 +283,7 @@ namespace wServer.realm
 
             Network = new NetworkTicker(this);
             Logic = new LogicTicker(this);
-            Database = new DatabaseTicker();
+            Database = new DatabaseTicker(this);
             network = new Thread(Network.TickLoop)
             {
                 Name = "Network",
