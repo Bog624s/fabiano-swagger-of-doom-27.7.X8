@@ -93,7 +93,7 @@ namespace wServer.realm
         public static List<string> CurrentRealmNames = new List<string>();
         public const int MAX_REALM_PLAYERS = 85;
 
-        private static readonly ILog log = LogManager.GetLogger(typeof(RealmManager));
+        private static readonly ILog log = LogManager.GetLogger(nameof(RealmManager));
 
         public ConcurrentDictionary<string, Client> Clients { get; private set; }
         public ConcurrentDictionary<int, World> Worlds { get; private set; }
@@ -172,12 +172,12 @@ namespace wServer.realm
             Monitor.WorldRemoved(world);
         }
 
-        public void Disconnect(Client client)
+        public async void Disconnect(Client client)
         {
             if (client == null) return;
             Client dummy;
             client.Disconnect();
-            client.Save();
+            await client.Save();
             while (!Clients.TryRemove(client.Account.AccountId, out dummy) && Clients.ContainsKey(client.Account.AccountId));
             client.Dispose();
         }
@@ -244,7 +244,7 @@ namespace wServer.realm
         public Vault PlayerVault(Client processor)
         {
             Vault v;
-            if(!vaults.TryGetValue(processor.Account.AccountId, out v))
+            if (!vaults.TryGetValue(processor.Account.AccountId, out v))
                 vaults.TryAdd(processor.Account.AccountId, v = (Vault)AddWorld(new Vault(false, processor)));
             else
                 v.Reload(processor);
@@ -283,7 +283,7 @@ namespace wServer.realm
 
             Network = new NetworkTicker(this);
             Logic = new LogicTicker(this);
-            Database = new DatabaseTicker(this);
+            Database = new DatabaseTicker();
             network = new Thread(Network.TickLoop)
             {
                 Name = "Network",
@@ -313,7 +313,7 @@ namespace wServer.realm
                 c.Disconnect();
             }
             //To prevent a buggy Account in use.
-            using(var db = new Database())
+            using (Database db = new Database())
                 foreach (Client c in saveAccountUnlock)
                     db.UnlockAccount(c.Account);
 
@@ -346,7 +346,7 @@ namespace wServer.realm
                 world.Manager = this;
             if (world is GameWorld)
                 Monitor.WorldAdded(world);
-            log.InfoFormat("World {0}({1}) added.", world.Id, world.Name);
+            log.InfoFormat($"World {world.Id}({world.Name}) added.");
         }
 
         private void OnWorldRemoved(World world)

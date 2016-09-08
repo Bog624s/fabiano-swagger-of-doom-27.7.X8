@@ -1,6 +1,4 @@
-﻿#region
-
-using db;
+﻿using db;
 using log4net;
 using System;
 using System.Collections.Concurrent;
@@ -10,50 +8,72 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#endregion
-
 namespace wServer.realm
 {
     public class DatabaseTicker
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseTicker));
 
-        public DatabaseTicker(RealmManager manager)
+        private readonly DatabaseCollection databases;
+
+        public DatabaseTicker()
         {
-            Manager = manager;
+            databases = new DatabaseCollection();
         }
 
-        public RealmManager Manager { get; }
-
-        public Task AddDatabaseOperation(Action<Database> action, Action<Exception> onException = null, bool logException = true)
+        public Task AddDatabaseOperation(Action<Database> callback)
         {
             return Task.Factory.StartNew(() =>
             {
-                using (Database db = new Database())
-                    action(db);
-            }).ContinueWith(t =>
-            {
-                Exception exception = t.Exception.InnerException;
-                onException?.Invoke(exception);
-                if (logException)
-                    log.Error("Error in database task:", exception);
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                var db = databases.GetAvailableDatabase();
+                try
+                {
+                    callback(db);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+                finally
+                {
+                    databases.FreeDatabase(db);
+                }
+            });
         }
 
-        public Task<TResult> AddDatabaseOperation<TResult>(Func<Database, TResult> func, Action<Exception> onException = null, bool logException = true)
+        public class DatabaseCollection
         {
-            return Task.Factory.StartNew(() =>
+            private object requestLock;
+            private Dictionary<Database, bool> databases;
+
+            public DatabaseCollection()
             {
-                using (Database db = new Database())
-                    return func(db);
-            }).ContinueWith<TResult>(t =>
+                requestLock = new object();
+                databases = new Dictionary<Database, bool>();
+            }
+
+            public Database GetAvailableDatabase()
             {
-                Exception exception = t.Exception.InnerException;
-                onException?.Invoke(exception);
-                if (logException)
-                    log.Error("Error in database task:", exception);
-                return t.Result;
-            }, TaskContinuationOptions.OnlyOnFaulted);
+                lock (requestLock)
+                {
+                    var db = getDatabase() ?? new Database();
+                    if (!databases.ContainsKey(db))
+                        databases.Add(db, false);
+                    else
+                        databases[db] = false;
+                    return db;
+                }
+            }
+
+            public void FreeDatabase(Database db)
+            {
+                lock (requestLock)
+                {
+                    databases[db] = true;
+                }
+            }
+
+            private Database getDatabase() => databases.Where(_ => _.Value && _.Key.Connection.State == System.Data.ConnectionState.Open).Select(_ => _.Key).FirstOrDefault();
         }
     }
 }
