@@ -163,7 +163,7 @@ namespace wServer.realm.worlds
 
         private void Init(string accId)
         {
-            Manager.Database.AddDatabaseOperation(db =>
+            Manager.Database.DoActionAsync(db =>
             {
                 this.AccountId = accId;
 
@@ -272,7 +272,7 @@ namespace wServer.realm.worlds
                 {
                     try
                     {
-                        Manager.Database.AddDatabaseOperation(db =>
+                        Manager.Database.DoActionAsync(db =>
                         {
                             i.Key.Item2._Items =
                                 Utils.GetCommaSepString(

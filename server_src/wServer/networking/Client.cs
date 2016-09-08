@@ -129,7 +129,7 @@ namespace wServer.networking
 
         public Task Save()
         {
-            return Manager.Database.AddDatabaseOperation(db =>
+            return Manager.Database.DoActionAsync(db =>
             {
                 try
                 {
@@ -194,7 +194,7 @@ namespace wServer.networking
 
         private void AddGiftCode(GiftCode code)
         {
-            Manager.Database.AddDatabaseOperation(db =>
+            Manager.Database.DoActionAsync(db =>
             {
                 var key = db.GenerateGiftcode(code.ToJson(), Account.AccountId);
 

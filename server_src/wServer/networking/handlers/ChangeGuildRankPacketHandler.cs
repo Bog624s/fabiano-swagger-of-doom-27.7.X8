@@ -1,6 +1,4 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +8,6 @@ using wServer.networking.svrPackets;
 using db;
 using wServer.realm.entities;
 using wServer.realm.entities.player;
-
-#endregion
 
 namespace wServer.networking.handlers
 {
@@ -26,7 +22,7 @@ namespace wServer.networking.handlers
 
         void Handle(Client client, ChangeGuildRankPacket packet)
         {
-            client.Manager.Database.AddDatabaseOperation(db =>
+            client.Manager.Database.DoActionAsync(db =>
             {
                 if (client.Player.Guild[client.Player.AccountId].Rank >= 20)
                 {

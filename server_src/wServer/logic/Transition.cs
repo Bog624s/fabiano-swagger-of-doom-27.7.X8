@@ -10,24 +10,34 @@ namespace wServer.logic
 {
     public abstract class Transition : IStateChildren
     {
-        public State[] TargetState { get; private set; }
+        [ThreadStatic] private static Random rand;
+        private readonly string targetStateName;
 
-        protected readonly string[] TargetStates;
-        protected int SelectedState;
-
-        protected Transition(params string[] targetStates)
+        public Transition(string targetState)
         {
-            TargetStates = targetStates;
+            targetStateName = targetState;
+        }
+
+        public State TargetState { get; private set; }
+
+        protected static Random Random
+        {
+            get
+            {
+                if (rand == null) rand = new Random();
+                return rand;
+            }
         }
 
         public bool Tick(Entity host, RealmTime time)
         {
             object state;
-            host.StateStorage.TryGetValue(this, out state);
+            if (!host.StateStorage.TryGetValue(this, out state))
+                state = null;
 
             bool ret = TickCore(host, time, ref state);
             if (ret)
-                host.SwitchTo(TargetState[SelectedState]);
+                host.SwitchTo(TargetState);
 
             if (state == null)
                 host.StateStorage.Remove(this);
@@ -40,36 +50,7 @@ namespace wServer.logic
 
         internal void Resolve(IDictionary<string, State> states)
         {
-            int numStates = TargetStates.Length;
-            TargetState = new State[numStates];
-            for (int i = 0; i < numStates; i++)
-                TargetState[i] = states[TargetStates[i]];
-        }
-
-        [ThreadStatic]
-        private static Random _rand;
-        protected static Random Random
-        {
-            get { return _rand ?? (_rand = new Random()); }
-        }
-
-        public void OnStateEntry(Entity host, RealmTime time)
-        {
-            object state;
-            if (!host.StateStorage.TryGetValue(this, out state))
-                state = null;
-
-            OnStateEntry(host, time, ref state);
-
-            if (state == null)
-                host.StateStorage.Remove(this);
-            else
-                host.StateStorage[this] = state;
-        }
-
-        protected virtual void OnStateEntry(Entity host, RealmTime time, ref object state)
-        {
-
+            TargetState = states[targetStateName];
         }
     }
 }
