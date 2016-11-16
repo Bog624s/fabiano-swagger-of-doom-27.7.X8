@@ -283,7 +283,7 @@ namespace wServer.realm
 
             Network = new NetworkTicker(this);
             Logic = new LogicTicker(this);
-            Database = new DatabaseTicker(this);
+            Database = new DatabaseTicker();
             network = new Thread(Network.TickLoop)
             {
                 Name = "Network",
