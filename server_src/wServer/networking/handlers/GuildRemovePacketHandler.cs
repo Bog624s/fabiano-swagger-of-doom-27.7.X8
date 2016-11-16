@@ -22,7 +22,7 @@ namespace wServer.networking.handlers
 
         void Handle(Client client, GuildRemovePacket packet)
         {
-            client.Manager.Database.DoActionAsync(db =>
+            client.Manager.Database.AddDatabaseOperation(db =>
             {
                 try
                 {

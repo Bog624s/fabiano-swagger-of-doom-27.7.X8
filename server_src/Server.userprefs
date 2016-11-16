@@ -1,13 +1,14 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{2ADA25D1-158E-4E88-B91B-F79981372136}|Default">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="wServer/logic/db/BehaviorDb.Oryx.cs">
-    <Files>
-      <File FileName="wServer/networking/NetworkHandler.cs" Line="130" Column="45" />
-      <File FileName="wServer/logic/db/BehaviorDb.Oryx.cs" Line="91" Column="14" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="server\char\list.cs">
+    <Files>
+      <File FileName="server\Program.cs" Line="156" Column="28" />
+      <File FileName="server\char\list.cs" Line="16" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.server PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

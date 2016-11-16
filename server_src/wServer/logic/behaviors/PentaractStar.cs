@@ -88,7 +88,7 @@ namespace wServer.logic.behaviors
                 cool = this.cool.Next(Random);
             }
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

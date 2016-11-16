@@ -29,7 +29,7 @@ namespace wServer.logic.behaviors
             if (cool <= 0)
                 host.Owner.LeaveWorld(host);
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

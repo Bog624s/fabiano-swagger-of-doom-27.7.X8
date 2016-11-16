@@ -13,7 +13,7 @@ namespace wServer.realm.entities.player
 
         public void HandleGround(RealmTime time)
         {
-            if (time.tickTimes - b <= 100) return;
+            if (time.TotalElapsedMs - b <= 100) return;
             try
             {
                 if (Owner.Name == "Ocean Trench")
@@ -41,7 +41,7 @@ namespace wServer.realm.entities.player
                     }
                 }
 
-                b = time.tickTimes;
+                b = time.TotalElapsedMs;
             }
             catch (Exception ex)
             {

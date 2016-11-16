@@ -30,6 +30,13 @@ namespace wServer.realm.entities
         public new ushort ObjectType => ObjectDesc.ObjectType;
         public new World WorldInstance { get; set; }
 
+		public override void Init(World owner)
+		{
+			base.Init(owner);
+			if (ObjectDesc.ObjectType != 0x0750) return;
+			Move(X + 0.5f, Y + 0.5f);
+		}
+
         protected override void ExportStats(IDictionary<StatsType, object> stats)
         {
             if (ObjectType != 0x072f)

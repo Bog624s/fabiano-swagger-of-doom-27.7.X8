@@ -61,7 +61,7 @@ namespace wServer.realm.entities
 
         public virtual void Buy(Player player)
         {
-            Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 if (ObjectType == 0x0505) //Vault chest
                 {

@@ -31,7 +31,7 @@ namespace wServer.logic.behaviors.Drakes
             {
                 case F.DontKnowWhere:
                     if (s.RemainingTime > 0)
-                        s.RemainingTime -= time.thisTickTimes;
+                        s.RemainingTime -= time.ElaspedMsDelta;
                     else
                         s.State = F.Acquired;
                     break;
@@ -43,7 +43,7 @@ namespace wServer.logic.behaviors.Drakes
                         break;
                     }
                     if (s.RemainingTime > 0)
-                        s.RemainingTime -= time.thisTickTimes;
+                        s.RemainingTime -= time.ElaspedMsDelta;
 
                     vect = new Vector2(player.X - host.X, player.Y - host.Y);
                     if (vect.Length > 20)
@@ -53,17 +53,17 @@ namespace wServer.logic.behaviors.Drakes
                     }
                     else if (vect.Length > 1)
                     {
-                        float dist = host.GetSpeed(1.2f) * (time.thisTickTimes / 1000f);
+                        float dist = host.GetSpeed(1.2f) * (time.ElaspedMsDelta / 1000f);
                         if (vect.Length > 2)
-                            dist = host.GetSpeed(1.2f + ((float)player.Stats[4] / 100)) * (time.thisTickTimes / 1000f);
+                            dist = host.GetSpeed(1.2f + ((float)player.Stats[4] / 100)) * (time.ElaspedMsDelta / 1000f);
                         else if (vect.Length > 3.5)
-                            dist = host.GetSpeed(1.2f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.thisTickTimes / 1000f);
+                            dist = host.GetSpeed(1.2f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.ElaspedMsDelta / 1000f);
                         else if (vect.Length > 5)
-                            dist = host.GetSpeed(1.3f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.thisTickTimes / 1000f);
+                            dist = host.GetSpeed(1.3f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.ElaspedMsDelta / 1000f);
                         else if (vect.Length > 6)
-                            dist = host.GetSpeed(1.4f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.thisTickTimes / 1000f);
+                            dist = host.GetSpeed(1.4f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.ElaspedMsDelta / 1000f);
                         else if (vect.Length > 7)
-                            dist = host.GetSpeed(1.5f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.thisTickTimes / 1000f);
+                            dist = host.GetSpeed(1.5f + ((float)player.Stats[4] + (float)player.Boost[4] / 100)) * (time.ElaspedMsDelta / 1000f);
 
                         Status = CycleStatus.InProgress;
                         vect.X -= Random.Next(-2, 2) / 2f;

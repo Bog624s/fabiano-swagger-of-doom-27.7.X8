@@ -135,7 +135,7 @@ namespace wServer.realm.entities
             {
                 if (Dying)
                 {
-                    HP -= time.thisTickTimes;
+                    HP -= time.ElaspedMsDelta;
                     UpdateCount++;
                 }
                 CheckHP();

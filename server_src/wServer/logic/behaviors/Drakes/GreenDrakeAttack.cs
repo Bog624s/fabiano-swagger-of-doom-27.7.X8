@@ -57,7 +57,7 @@ namespace wServer.logic.behaviors.Drakes
                 cool = 300;
             }
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

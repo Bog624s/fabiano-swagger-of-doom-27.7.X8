@@ -101,13 +101,13 @@ namespace wServer.realm.entities
                     ? Owner.EnemiesCollision
                     : Owner.PlayersCollision;
 
-            long elapsedTicks = time.tickTimes - BeginTime;
+            long elapsedTicks = time.TotalElapsedMs - BeginTime;
             if (elapsedTicks > Descriptor.LifetimeMS)
             {
                 Destroy(true);
                 return;
             }
-            long counter = time.thisTickTimes;
+            long counter = time.ElaspedMsDelta;
             while (counter > Manager.Logic.MsPT && TickCore(elapsedTicks - counter, time))
                 counter -= Manager.Logic.MsPT;
             if (Owner != null)

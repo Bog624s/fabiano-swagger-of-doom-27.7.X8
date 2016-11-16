@@ -32,13 +32,10 @@ namespace wServer.realm
 
     public struct RealmTime
     {
-        public int thisTickCounts { get; set; }
-
-        public int thisTickTimes { get; set; }
-
-        public long tickCount { get; set; }
-
-        public long tickTimes { get; set; }
+        public int TickDelta { get; set; }
+		public int ElaspedMsDelta { get; set; }
+		public long TickCount { get; set; }
+		public long TotalElapsedMs { get; set; }
     }
 
     public class RealmManager
@@ -283,7 +280,7 @@ namespace wServer.realm
 
             Network = new NetworkTicker(this);
             Logic = new LogicTicker(this);
-            Database = new DatabaseTicker();
+            Database = new DatabaseTicker(this);
             network = new Thread(Network.TickLoop)
             {
                 Name = "Network",

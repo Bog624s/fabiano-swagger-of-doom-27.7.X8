@@ -19,6 +19,11 @@ namespace wServer.logic.transitions
             this.transit = false;
         }
 
+		protected override void OnStateEntry(Entity host, RealmTime time, ref object state)
+		{
+			transit = false;
+		}
+
         protected override bool TickCore(Entity host, RealmTime time, ref object state)
         {
             return transit;
@@ -26,7 +31,7 @@ namespace wServer.logic.transitions
 
         public void OnChatReceived(string text)
         {
-            if (texts.Contains(text))
+            if (texts.Contains(text.ToLower()))
                 transit = true;
         }
     }

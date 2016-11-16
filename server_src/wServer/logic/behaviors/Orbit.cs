@@ -64,13 +64,13 @@ namespace wServer.logic.behaviors
                 else
                     angle = Math.Atan2(host.Y - entity.Y, host.X - entity.X);
                 float angularSpd = host.GetSpeed(s.Speed)/s.Radius;
-                angle += angularSpd*(time.thisTickTimes/1000f);
+                angle += angularSpd*(time.ElaspedMsDelta/1000f);
 
                 double x = entity.X + Math.Cos(angle)*radius;
                 double y = entity.Y + Math.Sin(angle)*radius;
                 Vector2 vect = new Vector2((float) x, (float) y) - new Vector2(host.X, host.Y);
                 vect.Normalize();
-                vect *= host.GetSpeed(s.Speed)*(time.thisTickTimes/1000f);
+                vect *= host.GetSpeed(s.Speed)*(time.ElaspedMsDelta/1000f);
 
                 host.ValidateAndMove(host.X + vect.X, host.Y + vect.Y);
                 host.UpdateCount++;

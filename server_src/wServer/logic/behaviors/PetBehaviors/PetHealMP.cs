@@ -82,7 +82,7 @@ namespace wServer.logic.behaviors.PetBehaviors
                 }
             }
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

@@ -36,7 +36,7 @@ namespace wServer.realm.entities.player
                     UpdateCount++;
                     healCount++;
                 }
-                healing += 28*(time.thisTickTimes/1000f);
+                healing += 28 * (time.ElaspedMsDelta / 1000f);
             }
             if (HasConditionEffect(ConditionEffectIndex.Quiet) &&
                 Mp > 0)
@@ -53,18 +53,18 @@ namespace wServer.realm.entities.player
                     bleeding -= (int) bleeding;
                     UpdateCount++;
                 }
-                bleeding += 28*(time.thisTickTimes/1000f);
+                bleeding += 28 * (time.ElaspedMsDelta / 1000f);
             }
 
             if (newbieTime > 0)
             {
-                newbieTime -= time.thisTickTimes;
+                newbieTime -= time.ElaspedMsDelta;
                 if (newbieTime < 0)
                     newbieTime = 0;
             }
             if (CanTPCooldownTime > 0)
             {
-                CanTPCooldownTime -= time.thisTickTimes;
+                CanTPCooldownTime -= time.ElaspedMsDelta;
                 if (CanTPCooldownTime < 0)
                     CanTPCooldownTime = 0;
             }

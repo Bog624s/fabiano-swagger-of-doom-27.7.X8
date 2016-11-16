@@ -53,12 +53,12 @@ namespace wServer.networking
                 new Client(Manager, skt);
         }
 
-        public async void Stop()
+        public void Stop()
         {
             log.Info("Stoping server...");
             foreach (Client i in Manager.Clients.Values.ToArray())
             {
-                await i.Save();
+                i.Save();
                 i.Disconnect();
             }
             Socket.Close();

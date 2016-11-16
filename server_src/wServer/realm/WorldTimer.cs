@@ -45,7 +45,7 @@ namespace wServer.realm
                 world.Timers.Remove(this);
                 return true;
             }
-            remain -= time.thisTickTimes;
+            remain -= time.ElaspedMsDelta;
             if (remain < 0)
             {
                 try

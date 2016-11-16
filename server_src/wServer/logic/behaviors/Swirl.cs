@@ -79,7 +79,7 @@ namespace wServer.logic.behaviors
                     s.RemainingTime = 5000;
             }
             else
-                s.RemainingTime -= time.thisTickTimes;
+                s.RemainingTime -= time.ElaspedMsDelta;
 
             double angle;
             if (host.Y == s.Center.Y && host.X == s.Center.X) //small offset
@@ -90,13 +90,13 @@ namespace wServer.logic.behaviors
 
             double spd = host.GetSpeed(speed)*(s.Acquired ? 1 : 0.2);
             double angularSpd = spd/radius;
-            angle += angularSpd*(time.thisTickTimes/1000f);
+            angle += angularSpd*(time.ElaspedMsDelta / 1000f);
 
             double x = s.Center.X + Math.Cos(angle)*radius;
             double y = s.Center.Y + Math.Sin(angle)*radius;
             Vector2 vect = new Vector2((float) x, (float) y) - new Vector2(host.X, host.Y);
             vect.Normalize();
-            vect *= (float) spd*(time.thisTickTimes/1000f);
+            vect *= (float) spd*(time.ElaspedMsDelta / 1000f);
 
             host.ValidateAndMove(host.X + vect.X, host.Y + vect.Y);
             host.UpdateCount++;

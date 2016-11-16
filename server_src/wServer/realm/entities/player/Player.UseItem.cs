@@ -163,7 +163,7 @@ namespace wServer.realm.entities.player
             {
                 Projectile proj = CreateProjectile(prjDesc, item.ObjectType,
                     (int) StatsManager.GetAttackDamage(prjDesc.MinDamage, prjDesc.MaxDamage),
-                    time.tickTimes, new Position {X = X, Y = Y}, (float) (startAngle + arcGap*i));
+                    time.TotalElapsedMs, new Position {X = X, Y = Y}, (float) (startAngle + arcGap*i));
                 Owner.EnterWorld(proj);
                 FameCounter.Shoot(proj);
             }
@@ -247,7 +247,7 @@ namespace wServer.realm.entities.player
                 Client.Character.Backpack = new [] {-1, -1, -1, -1, -1, -1, -1, -1};
                 HasBackpack = true;
                 Client.Character.HasBackpack = 1;
-                Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                     db.SaveBackpacks(Client.Character, Client.Account));
                 Array.Resize(ref inventory, 20);
                 int[] slotTypes =
@@ -314,12 +314,12 @@ namespace wServer.realm.entities.player
                         ProjectileDesc prjDesc = item.Projectiles[0]; //Assume only one
                         Packet[] batch = new Packet[21];
                         uint s = Random.CurrentSeed;
-                        Random.CurrentSeed = (uint)(s * time.tickTimes);
+                        Random.CurrentSeed = (uint)(s * time.TotalElapsedMs);
                         for (int i = 0; i < 20; i++)
                         {
                             Projectile proj = CreateProjectile(prjDesc, item.ObjectType,
                                 (int)StatsManager.GetAttackDamage(prjDesc.MinDamage, prjDesc.MaxDamage),
-                                time.tickTimes, target, (float)(i * (Math.PI * 2) / 20));
+                                time.TotalElapsedMs, target, (float)(i * (Math.PI * 2) / 20));
                             Owner.EnterWorld(proj);
                             FameCounter.Shoot(proj);
                             batch[i] = new Shoot2Packet()
@@ -1023,7 +1023,7 @@ namespace wServer.realm.entities.player
                     case ActivateEffects.UnlockSkin:
                         if (!Client.Account.OwnedSkins.Contains(item.ActivateEffects[0].SkinType))
                         {
-                            Manager.Database.DoActionAsync(db =>
+                            Manager.Database.AddDatabaseOperation(db =>
                             {
                                 Client.Account.OwnedSkins.Add(item.ActivateEffects[0].SkinType);
                                 MySqlCommand cmd = db.CreateQuery();

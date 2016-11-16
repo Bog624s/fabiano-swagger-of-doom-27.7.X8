@@ -93,6 +93,7 @@
     <Compile Include="QRCodeGenerator.cs" />
     <Compile Include="SimpleSettings.cs" />
     <Compile Include="WeakDictionary.cs" />
+    <Compile Include="Tasks\TaskUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utils.cs" />
@@ -139,6 +140,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tasks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

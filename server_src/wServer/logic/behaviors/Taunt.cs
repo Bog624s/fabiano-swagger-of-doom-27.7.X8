@@ -95,7 +95,7 @@ namespace wServer.logic.behaviors
             if (state == null) c = cooldown.Next(Random);
             else c = (int) state;
 
-            c -= time.thisTickTimes;
+            c -= time.ElaspedMsDelta;
             state = c;
             if (c > 0) return;
 

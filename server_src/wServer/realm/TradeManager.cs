@@ -183,7 +183,7 @@ namespace wServer.realm
             }
         }
 
-        private async void Trade()
+        private void Trade()
         {
             if (!InventoryFull())
             {
@@ -249,11 +249,6 @@ namespace wServer.realm
 
             player1.SaveToCharacter();
             player2.SaveToCharacter();
-            await Task.Run(async () =>
-            {
-                await player1.Client.Save();
-                await player2.Client.Save();
-            });
         }
 
         private void TradeError()

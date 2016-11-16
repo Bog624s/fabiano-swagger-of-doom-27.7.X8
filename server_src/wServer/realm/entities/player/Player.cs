@@ -15,7 +15,7 @@ namespace wServer.realm.entities.player
 {
     internal interface IPlayer
     {
-        void Damage(int dmg, Entity chr);
+        void Damage(int dmg, Entity chr, Boolean NoDef);
         bool IsVisibleToEnemy();
     }
 
@@ -93,7 +93,7 @@ namespace wServer.realm.entities.player
                 Ignored = psr.Account.Ignored ?? new List<string>();
                 try
                 {
-                    Manager.Database.DoActionAsync(db =>
+                    Manager.Database.AddDatabaseOperation(db =>
                     {
                         Locked = db.GetLockeds(AccountId);
                         Ignored = db.GetIgnoreds(AccountId);
@@ -281,7 +281,7 @@ namespace wServer.realm.entities.player
 
         public int[] SlotTypes { get; set; }
 
-        public void Damage(int dmg, Entity chr)
+        public void Damage(int dmg, Entity chr, Boolean NoDef)
         {
             try
             {
@@ -290,7 +290,7 @@ namespace wServer.realm.entities.player
                     HasConditionEffect(ConditionEffectIndex.Invincible))
                     return;
 
-                dmg = (int)StatsManager.GetDefenseDamage(dmg, false);
+                dmg = (int)StatsManager.GetDefenseDamage(dmg, NoDef);
                 if (!HasConditionEffect(ConditionEffectIndex.Invulnerable))
                     HP -= dmg;
                 UpdateCount++;
@@ -495,7 +495,7 @@ namespace wServer.realm.entities.player
 
             try
             {
-                Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                 {
                     Client.Character.Dead = true;
                     SaveToCharacter();
@@ -578,7 +578,7 @@ namespace wServer.realm.entities.player
             WorldTimer[] accTimer = {null};
             owner.Timers.Add(accTimer[0] = new WorldTimer(5000, (w, t) =>
             {
-                Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                 {
                     if (Client?.Account == null) return;
                     Client.Account = db.GetAccount(AccountId, Manager.GameData);
@@ -597,7 +597,7 @@ namespace wServer.realm.entities.player
                 pingTimer[0].Reset();
                 Manager.Logic.AddPendingAction(_ => w.Timers.Add(pingTimer[0]), PendingPriority.Creation);
             }));
-            Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 db.UpdateLastSeen(Client.Account.AccountId, Client.Character.CharacterId, owner.Name);
                 db.LockAccount(Client.Account);
@@ -753,7 +753,7 @@ namespace wServer.realm.entities.player
                         Owner.LeaveWorld(this);
                     else
                         WorldInstance.LeaveWorld(this);
-                    Manager.Database.DoActionAsync(db => db.UnlockAccount(Client.Account));
+                    Manager.Database.AddDatabaseOperation(db => db.UnlockAccount(Client.Account));
                     return;
                 }
                 if (Client.Stage == ProtocalStage.Disconnected || (!Client.Account.VerifiedEmail && Program.Verify))
@@ -762,7 +762,7 @@ namespace wServer.realm.entities.player
                         Owner.LeaveWorld(this);
                     else
                         WorldInstance.LeaveWorld(this);
-                    Manager.Database.DoActionAsync(db => db.UnlockAccount(Client.Account));
+                    Manager.Database.AddDatabaseOperation(db => db.UnlockAccount(Client.Account));
                     return;
                 }
             }
@@ -770,6 +770,16 @@ namespace wServer.realm.entities.player
             {
                 log.Error(e);
             }
+			try
+			{
+				SendNewTick(time);
+			}
+			catch (Exception e)
+			{
+				log.Error(e);
+			}
+
+			if (Owner == null) return;
 
             if (Stats != null && Boost != null)
             {
@@ -817,14 +827,6 @@ namespace wServer.realm.entities.player
                         Client.Disconnect();
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                log.Error(e);
-            }
-            try
-            {
-                SendNewTick(time);
             }
             catch (Exception e)
             {
@@ -950,7 +952,7 @@ namespace wServer.realm.entities.player
                 hpRegenCounter = 0;
             else
             {
-                hpRegenCounter += StatsManager.GetHPRegen() * time.thisTickTimes / 1000f;
+                hpRegenCounter += StatsManager.GetHPRegen() * time.ElaspedMsDelta / 1000f;
                 var regen = (int)hpRegenCounter;
                 if (regen > 0)
                 {
@@ -964,7 +966,7 @@ namespace wServer.realm.entities.player
                 mpRegenCounter = 0;
             else
             {
-                mpRegenCounter += StatsManager.GetMPRegen() * time.thisTickTimes / 1000f;
+                mpRegenCounter += StatsManager.GetMPRegen() * time.ElaspedMsDelta / 1000f;
                 var regen = (int)mpRegenCounter;
                 if (regen <= 0) return;
                 Mp = Math.Min(Stats[1] + Boost[1], Mp + regen);

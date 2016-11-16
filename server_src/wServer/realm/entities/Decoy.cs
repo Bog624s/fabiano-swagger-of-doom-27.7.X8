@@ -41,7 +41,7 @@ namespace wServer.realm.entities
             }
         }
 
-        public void Damage(int dmg, Entity chr) { }
+        public void Damage(int dmg, Entity chr, Boolean NoDef) { }
 
         public bool IsVisibleToEnemy() { return true; }
 
@@ -73,8 +73,8 @@ namespace wServer.realm.entities
             if (HP > duration / 2)
             {
                 this.ValidateAndMove(
-                    X + direction.X * speed * time.thisTickTimes / 1000,
-                    Y + direction.Y * speed * time.thisTickTimes / 1000
+                    X + direction.X * speed * time.ElaspedMsDelta / 1000,
+                    Y + direction.Y * speed * time.ElaspedMsDelta / 1000
                 );
             }
             if (HP < 250 && !exploded)

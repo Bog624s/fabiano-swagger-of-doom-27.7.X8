@@ -148,7 +148,7 @@ namespace wServer.realm.entities.player
 
         private void HandleQuest(RealmTime time)
         {
-            if (time.tickCount%500 != 0 && Quest?.Owner != null) return;
+            if (time.TickCount%500 != 0 && Quest?.Owner != null) return;
             var newQuest = FindQuest();
             if (newQuest == null || newQuest == Quest) return;
             Owner.Timers.Add(new WorldTimer(100, (w, t) =>
@@ -251,8 +251,6 @@ namespace wServer.realm.entities.player
                         i.Experience += i.XpBoosted ? exp * 2 : exp;
                         i.UpdateCount++;
                         i.CheckLevelUp();
-                        if (Random.Next(1, 100000) <= 50)
-                            Client.GiftCodeReceived("LevelUp");
                     }
                     catch (Exception ex)
                     {

@@ -403,14 +403,14 @@ namespace wServer.realm
                 }
                 else
                 {
-                    if (time.tickTimes - prevTick > 25000)
+                    if (time.TotalElapsedMs - prevTick > 25000)
                     {
                         if (x % 2 == 0)
                             HandleAnnouncements();
                         if (x % 6 == 0)
                             EnsurePopulation();
                         x++;
-                        prevTick = time.tickTimes;
+                        prevTick = time.TotalElapsedMs;
                     }
                 }
             }

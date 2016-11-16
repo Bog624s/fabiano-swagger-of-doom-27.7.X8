@@ -41,7 +41,7 @@ namespace wServer.logic.behaviors
                 cool = 150;
             }
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

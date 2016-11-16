@@ -160,6 +160,8 @@ namespace wServer.realm
                 {
                     foreach (var i in s.Behaviors)
                         i.OnStateEntry(this, time);
+					foreach (var i in s.Transitions)
+						i.OnStateEntry(this, time);
                     s = s.Parent;
                 }
                 stateEntryCommonRoot = null;
@@ -441,7 +443,7 @@ namespace wServer.realm
             for (int i = 0; i < effects.Length; i++)
                 if (effects[i] > 0)
                 {
-                    effects[i] -= time.thisTickTimes;
+                    effects[i] -= time.ElaspedMsDelta;
                     if (effects[i] > 0)
                         newEffects |= (ConditionEffects)((ulong)1 << i);
                     else

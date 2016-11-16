@@ -426,23 +426,6 @@ namespace wServer.realm
                 foreach (var i in Players)
                     i.Value.Tick(time);
 
-                foreach (var i in Pets)
-                    i.Value.Tick(time);
-
-                if (EnemiesCollision != null)
-                {
-                    foreach (var i in EnemiesCollision.GetActiveChunks(PlayersCollision))
-                        i.Tick(time);
-                    foreach (var i in StaticObjects.Where(x => x.Value is Decoy))
-                        i.Value.Tick(time);
-                }
-                else
-                {
-                    foreach (var i in Enemies)
-                        i.Value.Tick(time);
-                    foreach (var i in StaticObjects)
-                        i.Value.Tick(time);
-                }
                 foreach (var i in Projectiles)
                     i.Value.Tick(time);
 
@@ -456,6 +439,29 @@ namespace wServer.realm
                 Log.Error("World: " + Name + "\n" + e);
             }
         }
+
+		public void TickLogic(RealmTime time)
+		{
+			if (EnemiesCollision != null)
+			{
+				foreach (var i in EnemiesCollision.GetActiveChunks(PlayersCollision))
+					i.Tick(time);
+				foreach (var i in StaticObjects.Where(x => x.Value is Decoy))
+					i.Value.Tick(time);
+			}
+			else
+			{
+				foreach (var i in Enemies)
+					i.Value.Tick(time);
+				foreach (var i in StaticObjects)
+					i.Value.Tick(time);
+			}
+			foreach (var i in Enemies.Where(_ => _.Value.ObjectDesc?.Group == "Zombies"))
+				i.Value.Tick(time);
+
+			foreach (var i in Pets)
+				i.Value.Tick(time);
+		}
 
         public bool IsFull => MaxPlayers != -1 && Players.Keys.Count >= MaxPlayers;
 

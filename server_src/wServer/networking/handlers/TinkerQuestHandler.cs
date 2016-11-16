@@ -47,7 +47,10 @@ namespace wServer.networking.handlers
         {
             switch (DailyQuestConstants.Rewards[index])
             {
-                case "FortuneToken":
+                case "FortuneToken:1":
+					Client.Player.Tokens = db.UpdateFortuneToken(Client.Account, +1);
+					break;
+				case "FortuneToken:2":
                     Client.Player.Tokens = db.UpdateFortuneToken(Client.Account, +2);
                     break;
             }

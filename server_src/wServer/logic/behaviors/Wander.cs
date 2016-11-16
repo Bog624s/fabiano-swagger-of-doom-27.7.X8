@@ -47,7 +47,7 @@ namespace wServer.logic.behaviors
             //    return;
             //}
 
-            float dist = host.GetSpeed(speed)*(time.thisTickTimes/1000f);
+            float dist = host.GetSpeed(speed)*(time.ElaspedMsDelta / 1000f);
             host.ValidateAndMove(host.X + storage.Direction.X*dist, host.Y + storage.Direction.Y*dist);
             host.UpdateCount++;
 

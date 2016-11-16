@@ -37,7 +37,7 @@ namespace wServer.logic.behaviors
 
             if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) return;
 
-            float moveDist = host.GetSpeed(speed)*(time.thisTickTimes/1000f);
+            float moveDist = host.GetSpeed(speed)*(time.ElaspedMsDelta/1000f);
             if (dist > 0)
             {
                 Status = CycleStatus.InProgress;

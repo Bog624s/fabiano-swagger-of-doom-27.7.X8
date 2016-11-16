@@ -179,7 +179,7 @@ namespace wServer.realm.entities
                     bleeding -= (int) bleeding;
                     UpdateCount++;
                 }
-                bleeding += 28*(time.thisTickTimes/1000f);
+                bleeding += 28 * (time.ElaspedMsDelta / 1000f);
             }
             base.Tick(time);
         }

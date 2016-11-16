@@ -37,7 +37,7 @@ namespace wServer.logic.behaviors
                 Vector2 vect;
                 vect = new Vector2(player.X - host.X, player.Y - host.Y);
                 vect.Normalize();
-                float dist = host.GetSpeed(speed)*(time.thisTickTimes/1000f);
+                float dist = host.GetSpeed(speed)*(time.ElaspedMsDelta / 1000f);
                 host.ValidateAndMove(host.X + (-vect.X)*dist, host.Y + (-vect.Y)*dist);
                 host.UpdateCount++;
 
@@ -49,7 +49,7 @@ namespace wServer.logic.behaviors
                 else
                 {
                     Status = CycleStatus.InProgress;
-                    cooldown -= time.thisTickTimes;
+                    cooldown -= time.ElaspedMsDelta;
                 }
             }
 

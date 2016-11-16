@@ -17,7 +17,7 @@ namespace wServer.networking.handlers
 
         protected override void HandlePacket(Client client, ViewQuestsPacket packet)
         {
-            client.Manager.Database.DoActionAsync(db =>
+            client.Manager.Database.AddDatabaseOperation(db =>
             {
                 client.Player.DailyQuest = db.GetDailyQuest(client.Account.AccountId, Manager.GameData);
 

@@ -211,7 +211,7 @@ namespace wServer.realm.entities.player
             var p = new NewTickPacket();
             tickId++;
             p.TickId = tickId;
-            p.TickTime = time.thisTickTimes;
+            p.TickTime = time.ElaspedMsDelta;
             p.UpdateStatuses = sendEntities.Select(_ => _.ExportStats()).ToArray();
             Client.SendPacket(p);
         }

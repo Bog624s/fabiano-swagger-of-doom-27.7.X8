@@ -127,30 +127,30 @@ namespace wServer.networking
             }
         }
 
-        public Task Save()
+        public void Save()
         {
-            return Manager.Database.DoActionAsync(db =>
+            //Safe copy variables just in case someone sets them to null after we checked for "if (chr != null)"
+            var character = Character;
+			var account = Account;
+			var player = Player;
+			if (character == null || player == null) return;
+			player.SaveToCharacter();
+			string w = null;
+
+			if (player.Owner != null)
+			{
+				if (player.Owner.Id == -6) return;
+				w = player.Owner.Name;
+			}
+
+			Manager.Database.AddDatabaseOperation(db =>
             {
                 try
                 {
-                    string w = null;
-                    if (Player != null)
-                    {
-                        Player.SaveToCharacter();
-                        if (Player.Owner != null)
-                        {
-                            if (Player.Owner.Id == -6) return;
-                            w = Player.Owner.Name;
-                        }
-                    }
-
-                    if (Character != null)
-                    {
-                        if (w != null) db.UpdateLastSeen(Account.AccountId, Character.CharacterId, w);
-                        db.SaveCharacter(Account, Character);
-                    }
-
-                    db.UnlockAccount(Account);
+                    log.Debug("Saving character...");
+					if (w != null) db.UpdateLastSeen(account.AccountId, character.CharacterId, w);
+					db.SaveCharacter(account, character);
+					db.UnlockAccount(account);
                 }
                 catch (Exception ex)
                 {
@@ -164,7 +164,7 @@ namespace wServer.networking
         {
             Manager.Logic.AddPendingAction(t =>
             {
-                Save();
+                Player?.SaveToCharacter();
                 Manager.Disconnect(this);
             }, PendingPriority.Destruction);
         }
@@ -194,7 +194,7 @@ namespace wServer.networking
 
         private void AddGiftCode(GiftCode code)
         {
-            Manager.Database.DoActionAsync(db =>
+			Manager.Database.AddDatabaseOperation(db =>
             {
                 var key = db.GenerateGiftcode(code.ToJson(), Account.AccountId);
 

@@ -92,7 +92,7 @@ namespace wServer.logic
 
         public void Tick(RealmTime time)
         {
-            elapsed += time.thisTickTimes;
+            elapsed += time.ElaspedMsDelta;
             if (elapsed > 1000*60)
             {
                 elapsed -= 1000*60;

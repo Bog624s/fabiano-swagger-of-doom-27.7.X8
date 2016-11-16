@@ -75,7 +75,7 @@ namespace wServer.logic.behaviors.PetBehaviors
                 cool = getCooldown(host as Pet, level) / host.Manager.TPS;
             }
             else
-                cool -= time.thisTickTimes;
+                cool -= time.ElaspedMsDelta;
 
             state = cool;
         }

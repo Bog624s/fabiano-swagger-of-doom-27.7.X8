@@ -15,6 +15,7 @@ namespace wServer.realm.entities.player
 
         private readonly Queue<Tuple<Packet, Predicate<Player>>> pendingPackets =
             new Queue<Tuple<Packet, Predicate<Player>>>();
+		private readonly List<Delegate> nextUpdateCallbacks = new List<Delegate>();
 
         internal void Flush()
         {
@@ -31,6 +32,11 @@ namespace wServer.realm.entities.player
         {
             BroadcastSync(packet, _ => true);
         }
+
+		public void OnNextUpdateAccept(Delegate callback)
+		{
+			nextUpdateCallbacks.Add(callback);
+		}
 
         public void BroadcastSync(Packet packet, Predicate<Player> cond)
         {
