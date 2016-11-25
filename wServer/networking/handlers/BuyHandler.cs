@@ -10,7 +10,7 @@ namespace wServer.networking.handlers
 {
     internal class BuyHandler : PacketHandlerBase<BuyPacket>
     {
-		public override PacketID ID => PacketID.BUY;
+        public override PacketID ID => PacketID.BUY;
 
         protected override void HandlePacket(Client client, BuyPacket packet)
         {
@@ -19,8 +19,8 @@ namespace wServer.networking.handlers
                 if (client.Player.Owner == null) return;
                 SellableObject obj = client.Player.Owner.GetEntity(packet.ObjectId) as SellableObject;
                 if (obj != null)
-					for (int i = 0; i < packet.Quantity; i++)
-						obj.Buy(client.Player);
+                   for (int i = 0; i < packet.Quantity; i++)
+                        obj.Buy(client.Player);
             }, PendingPriority.Networking);
         }
     }

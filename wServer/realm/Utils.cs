@@ -49,11 +49,11 @@ namespace wServer.realm
 
         public static Entity GetNearestEntity(this Entity entity, double dist, ushort? objType) //Null for player
         {
-			Entity[] entities = entity.GetNearestEntities(dist, objType).ToArray();
-			if (entities.Length <= 0)
-				return null;
-			return entities.Aggregate(
-				(curmin, x) => (curmin == null || x.DistSqr(entity) < curmin.DistSqr(entity) ? x : curmin));
+            Entity[] entities = entity.GetNearestEntities(dist, objType).ToArray();
+            if (entities.Length <= 0)
+                return null;
+            return entities.Aggregate(
+                (curmin, x) => (curmin == null || x.DistSqr(entity) < curmin.DistSqr(entity) ? x : curmin));
         }
 
         public static Entity GetEntity(this Entity entity, int entityId)

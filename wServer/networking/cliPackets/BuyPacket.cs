@@ -3,9 +3,9 @@
     public class BuyPacket : ClientPacket
     {
         public int ObjectId { get; set; }
-		public int Quantity { get; set; }
+        public int Quantity { get; set; }
 
-		public override PacketID ID => PacketID.BUY;
+        public override PacketID ID => PacketID.BUY;
 
         public override Packet CreateInstance()
         {
@@ -15,13 +15,13 @@
         protected override void Read(Client psr, NReader rdr)
         {
             ObjectId = rdr.ReadInt32();
-			Quantity = rdr.ReadInt32();
+            Quantity = rdr.ReadInt32();
         }
 
         protected override void Write(Client psr, NWriter wtr)
         {
             wtr.Write(ObjectId);
-			wtr.Write(Quantity);
+            wtr.Write(Quantity);
         }
     }
 }
