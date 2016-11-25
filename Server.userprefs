@@ -4,10 +4,9 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="server\char\list.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="wServer\networking\handlers\BuyHandler.cs">
     <Files>
-      <File FileName="server\Program.cs" Line="156" Column="28" />
-      <File FileName="server\char\list.cs" Line="16" Column="35" />
+      <File FileName="wServer\networking\handlers\BuyHandler.cs" Line="14" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.server PreferredExecutionTarget="MonoDevelop.Default" />
