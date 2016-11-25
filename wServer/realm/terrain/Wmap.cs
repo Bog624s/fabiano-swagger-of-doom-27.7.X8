@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using db.data;
+using db;
 using Ionic.Zlib;
 using wServer.realm.entities;
 using wServer.realm.entities.merchant;

@@ -1,6 +1,6 @@
 ﻿#region
 
-using db.data;
+using db;
 using wServer.logic.loot;
 
 #endregion

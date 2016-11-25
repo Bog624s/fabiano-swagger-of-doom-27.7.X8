@@ -2,7 +2,7 @@
 
 using System;
 using System.Linq;
-using db.data;
+using db;
 using wServer.logic.loot;
 using wServer.realm.entities;
 

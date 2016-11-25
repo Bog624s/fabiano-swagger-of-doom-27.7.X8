@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using db.data;
+using db;
 using log4net;
 
 #endregion

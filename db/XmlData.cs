@@ -12,7 +12,7 @@ using log4net;
 
 #endregion
 
-namespace db.data
+namespace db
 {
     public class XmlData : IDisposable
     {
@@ -40,7 +40,7 @@ namespace db.data
         private int updateCount;
         private AutoAssign assign;
 
-        public XmlData(string path = "data")
+        public XmlData(string path = "resources/xml")
         {
             ObjectTypeToElement = new ReadOnlyDictionary<ushort, XElement>(
                 type2elem_obj = new Dictionary<ushort, XElement>());

@@ -11,7 +11,6 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using db;
-using db.data;
 using log4net;
 using log4net.Config;
 using server.sfx;
