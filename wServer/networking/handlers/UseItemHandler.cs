@@ -34,7 +34,7 @@ namespace wServer.networking.handlers
                 switch (packet.SlotObject.SlotId)
                 {
                     case 254:
-						item = client.Player.Manager.GameData.Items[(ushort)packet.SlotObject.ObjectType];
+                        item = client.Player.Manager.GameData.Items[packet.SlotObject.ObjectType];
 
                         if (item.ObjectId != "Health Potion")
                         {
@@ -137,7 +137,7 @@ namespace wServer.networking.handlers
                         }
                         break;
                     case 255:
-						item = client.Player.Manager.GameData.Items[(ushort)packet.SlotObject.ObjectType];
+                        item = client.Player.Manager.GameData.Items[packet.SlotObject.ObjectType];
 
                         if (item.ObjectId != "Magic Potion")
                         {

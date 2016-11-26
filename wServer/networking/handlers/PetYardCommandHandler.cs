@@ -290,7 +290,7 @@ namespace wServer.networking.handlers
             if (s == null) return;
             PetSkin skin = client.Manager.GameData.IdToPetSkin[s.DefaultSkin];
 
-			client.Manager.Database.DoActionAsync(db =>
+            client.Manager.Database.AddDatabaseOperation(db =>
             {
                 var cmd = db.CreateQuery();
                 cmd.CommandText = "UPDATE pets SET rarity=rarity+1, maxLevel=@level, skinName=@skinName, skin=@skinId, objType=@objType WHERE petId=@petId1 AND accId=@accId;";
@@ -318,7 +318,7 @@ namespace wServer.networking.handlers
 
             if (level > 100) level = 100;
 
-			client.Manager.Database.DoActionAsync(db =>
+            client.Manager.Database.AddDatabaseOperation(db =>
             {
                 var cmd = db.CreateQuery();
                 cmd.CommandText = "UPDATE pets SET rarity=rarity+1, maxLevel=@level WHERE petId=@petId1 AND accId=@accId;";

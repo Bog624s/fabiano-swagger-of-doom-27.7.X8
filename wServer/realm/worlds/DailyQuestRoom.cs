@@ -31,7 +31,7 @@ namespace wServer.realm.worlds
             {
                 Timers.Add(new WorldTimer(2000, (w, t) =>
                 {
-					Manager.Database.DoActionAsync(db =>
+                    Manager.Database.AddDatabaseOperation(db =>
                     {
                         var q = db.GetDailyQuest((entity as Player).AccountId, Manager.GameData);
                         (entity as Player).Client.SendPacket(new networking.svrPackets.QuestFetchResponsePacket

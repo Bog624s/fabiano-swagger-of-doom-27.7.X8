@@ -247,7 +247,7 @@ namespace wServer.realm.entities.player
                 Client.Character.Backpack = new [] {-1, -1, -1, -1, -1, -1, -1, -1};
                 HasBackpack = true;
                 Client.Character.HasBackpack = 1;
-				Manager.Database.DoActionAsync(db =>
+                Manager.Database.AddDatabaseOperation(db =>
                     db.SaveBackpacks(Client.Character, Client.Account));
                 Array.Resize(ref inventory, 20);
                 int[] slotTypes =
@@ -1023,7 +1023,7 @@ namespace wServer.realm.entities.player
                     case ActivateEffects.UnlockSkin:
                         if (!Client.Account.OwnedSkins.Contains(item.ActivateEffects[0].SkinType))
                         {
-							Manager.Database.DoActionAsync(db =>
+                            Manager.Database.AddDatabaseOperation(db =>
                             {
                                 Client.Account.OwnedSkins.Add(item.ActivateEffects[0].SkinType);
                                 MySqlCommand cmd = db.CreateQuery();

@@ -38,7 +38,7 @@ namespace wServer.networking.handlers
                 client.Disconnect();
                 return;
             }
-			client.Manager.Database.DoActionAsync(db =>
+            client.Manager.Database.AddDatabaseOperation(db =>
             {
                 if ((client.Account = db.Verify(packet.GUID, packet.Password, Manager.GameData)) == null)
                 {

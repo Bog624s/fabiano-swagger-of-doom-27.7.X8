@@ -174,7 +174,7 @@ namespace wServer.realm.commands
                 });
                 return false;
             }
-			player.Manager.Database.DoActionAsync(db =>
+            player.Manager.Database.AddDatabaseOperation(db =>
             {
                 var gStruct = db.GetGuild(args[0]);
                 if (player.Invited == false)

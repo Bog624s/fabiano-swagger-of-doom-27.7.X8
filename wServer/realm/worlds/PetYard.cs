@@ -45,7 +45,7 @@ namespace wServer.realm.worlds
 
         private void LoadPetYardData(Player player)
         {
-			Manager.Database.DoActionAsync(db =>
+            Manager.Database.AddDatabaseOperation(db =>
             {
                 MySqlCommand cmd = db.CreateQuery();
                 cmd.CommandText = "SELECT petId, objType FROM pets WHERE accId=@accId AND NOT petId=@petId;";

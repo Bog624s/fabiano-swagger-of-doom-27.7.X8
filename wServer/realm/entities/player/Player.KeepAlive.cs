@@ -29,7 +29,7 @@ namespace wServer.realm.entities.player
 
                 if (updateLastSeen >= 60)
                 {
-					Manager.Database.DoActionAsync(db =>
+                    Manager.Database.AddDatabaseOperation(db =>
                     {
                         db.UpdateLastSeen(Client.Account.AccountId, Client.Character.CharacterId, WorldInstance.Name);
                         updateLastSeen = 0;

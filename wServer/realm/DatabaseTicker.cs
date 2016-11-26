@@ -14,66 +14,43 @@ namespace wServer.realm
 	{
 		private static readonly ILog log = LogManager.GetLogger(typeof(DatabaseTicker));
 
-		private readonly DatabaseCollection databases;
-
-		public DatabaseTicker()
+		public DatabaseTicker(RealmManager manager)
 		{
-			databases = new DatabaseCollection();
+			Manager = manager;
 		}
 
-		public Task DoActionAsync(Action<Database> callback)
+		public RealmManager Manager { get; }
+
+		public Task AddDatabaseOperation(Action<Database> action, Action<Exception> onException = null, bool logException = true)
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				var db = databases.GetAvailableDatabase();
-				try
-				{
-					callback(db);
-				}
-				catch (Exception ex)
-				{
-					log.Error(ex);
-				}
-				finally
-				{
-					databases.FreeDatabase(db);
-				}
-			});
+				using (var db = new Database())
+					action(db);
+			}).ContinueWith(t =>
+			{
+				var exception = t.Exception.InnerException;
+				onException?.Invoke(exception);
+				if (logException)
+					log.Error("Error in database task:", exception);
+			}, TaskContinuationOptions.OnlyOnFaulted);
 		}
 
-		public class DatabaseCollection
-		{
-			private object requestLock;
-			private Dictionary<Database, bool> databases;
-
-			public DatabaseCollection()
-			{
-				requestLock = new object();
-				databases = new Dictionary<Database, bool>();
-			}
-
-			public Database GetAvailableDatabase()
-			{
-				lock (requestLock)
-				{
-					var db = getDatabase() ?? new Database();
-					if (!databases.ContainsKey(db))
-						databases.Add(db, false);
-					else
-						databases[db] = false;
-					return db;
-				}
-			}
-
-			public void FreeDatabase(Database db)
-			{
-				lock (requestLock)
-				{
-					databases[db] = true;
-				}
-			}
-
-			private Database getDatabase() => databases.Where(_ => _.Value && _.Key.Connection.State == System.Data.ConnectionState.Open).Select(_ => _.Key).FirstOrDefault();
-		}
+		/**public Task<TResult> AddDatabaseOperation<TResult>(Func<Database, TResult> func, Action<Exception> onException = null, bool logException = true)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                using (var db = new Database())
+                    return func(db);
+            });
+            ContinueWith<TResult>(t =>
+            {
+                var exception = t.Exception.InnerException;
+                onException?.Invoke(exception);
+                if (logException)
+                    log.Error("Error in database task:", exception);
+                return t.Result;
+            }, TaskContinuationOptions.OnlyOnFaulted);
+        } **/
 	}
 }
