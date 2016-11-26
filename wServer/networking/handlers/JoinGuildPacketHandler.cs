@@ -30,7 +30,7 @@ namespace wServer.networking.handlers
                 });
                 return;
             }
-            client.Manager.Database.AddDatabaseOperation(db =>
+			client.Manager.Database.DoActionAsync(db =>
             {
                 var gStruct = db.GetGuild(packet.GuildName);
                 if (client.Player.Invited == false)

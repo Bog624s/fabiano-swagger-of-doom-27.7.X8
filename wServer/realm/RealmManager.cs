@@ -168,7 +168,7 @@ namespace wServer.realm
             Monitor.WorldRemoved(world);
         }
 
-        public void Disconnect(Client client)
+		public void Disconnect(Client client)
         {
             if (client == null) return;
             Client dummy;
@@ -279,7 +279,7 @@ namespace wServer.realm
 
             Network = new NetworkTicker(this);
             Logic = new LogicTicker(this);
-            Database = new DatabaseTicker(this);
+            Database = new DatabaseTicker();
             network = new Thread(Network.TickLoop)
             {
                 Name = "Network",

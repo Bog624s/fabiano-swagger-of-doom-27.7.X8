@@ -27,7 +27,7 @@ namespace wServer.networking
 
     public class Client : IDisposable
     {
-        public const string SERVER_VERSION = "27.7.0";
+        public const string SERVER_VERSION = "27.3.2";
         private bool disposed;
 
         private static readonly ILog log = LogManager.GetLogger(typeof (Client));
@@ -127,30 +127,31 @@ namespace wServer.networking
             }
         }
 
-        public void Save()
+        public Task Save()
         {
             //Safe copy variables just in case someone sets them to null after we checked for "if (chr != null)"
-            var character = Character;
-			var account = Account;
-			var player = Player;
-			if (character == null || player == null) return;
-			player.SaveToCharacter();
-			string w = null;
-
-			if (player.Owner != null)
-			{
-				if (player.Owner.Id == -6) return;
-				w = player.Owner.Name;
-			}
-
-			Manager.Database.AddDatabaseOperation(db =>
+            return Manager.Database.DoActionAsync(db =>
             {
                 try
                 {
-                    log.Debug("Saving character...");
-					if (w != null) db.UpdateLastSeen(account.AccountId, character.CharacterId, w);
-					db.SaveCharacter(account, character);
-					db.UnlockAccount(account);
+                    string w = null;
+					if (Player != null)
+					{
+						Player.SaveToCharacter();
+						if (Player.Owner != null)
+						{
+							if (Player.Owner.Id == -6) return;
+							w = Player.Owner.Name;
+						}
+					}
+
+					if (Character != null)
+					{
+						if (w != null) db.UpdateLastSeen(Account.AccountId, Character.CharacterId, w);
+						db.SaveCharacter(Account, Character);
+					}
+
+					db.UnlockAccount(Account);
                 }
                 catch (Exception ex)
                 {
@@ -164,7 +165,7 @@ namespace wServer.networking
         {
             Manager.Logic.AddPendingAction(t =>
             {
-                Player?.SaveToCharacter();
+                Save();
                 Manager.Disconnect(this);
             }, PendingPriority.Destruction);
         }
@@ -194,7 +195,7 @@ namespace wServer.networking
 
         private void AddGiftCode(GiftCode code)
         {
-			Manager.Database.AddDatabaseOperation(db =>
+			Manager.Database.DoActionAsync(db =>
             {
                 var key = db.GenerateGiftcode(code.ToJson(), Account.AccountId);
 

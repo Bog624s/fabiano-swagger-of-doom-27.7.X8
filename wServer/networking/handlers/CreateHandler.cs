@@ -21,7 +21,7 @@ namespace wServer.networking.handlers
 
         protected override void HandlePacket(Client client, CreatePacket packet)
         {
-			Manager.Database.AddDatabaseOperation(db =>
+			Manager.Database.DoActionAsync(db =>
 			{
 				MySqlCommand cmd = db.CreateQuery();
 				int nextCharId = 1;

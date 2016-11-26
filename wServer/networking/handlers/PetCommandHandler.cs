@@ -22,7 +22,7 @@ namespace wServer.networking.handlers
         {
             client.Manager.Logic.AddPendingAction(t =>
             {
-                client.Manager.Database.AddDatabaseOperation(db =>
+				client.Manager.Database.DoActionAsync(db =>
                 {
                     if (!(client.Player.Owner is PetYard)) return;
                     var pet = ((PetYard)client.Player.Owner).FindPetById((int)packet.PetId);

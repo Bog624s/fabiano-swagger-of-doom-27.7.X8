@@ -24,7 +24,7 @@ namespace wServer.networking.handlers
         {
             try
             {
-                client.Manager.Database.AddDatabaseOperation(db =>
+				client.Manager.Database.DoActionAsync(db =>
                 {
                     Player player = client.Player;
                     var name = packet.Name.ToString();

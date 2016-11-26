@@ -22,7 +22,7 @@ namespace wServer.networking.handlers
 
         void Handle(Client client, ChangeGuildRankPacket packet)
         {
-            client.Manager.Database.AddDatabaseOperation(db =>
+			client.Manager.Database.DoActionAsync(db =>
             {
                 if (client.Player.Guild[client.Player.AccountId].Rank >= 20)
                 {

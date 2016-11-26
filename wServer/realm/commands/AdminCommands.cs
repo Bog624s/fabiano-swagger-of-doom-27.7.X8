@@ -91,7 +91,7 @@ namespace wServer.realm.commands
                 player.SendError("Player not found");
                 return false;
             }
-            player.Manager.Database.AddDatabaseOperation(db =>
+			player.Manager.Database.DoActionAsync(db =>
             {
                 var cmd = db.CreateQuery();
                 cmd.CommandText = "UPDATE accounts SET banned=1 WHERE id=@accId;";
@@ -421,7 +421,7 @@ namespace wServer.realm.commands
                     if (i.Value.Name.ToLower() == args[0].ToLower().Trim())
                     {
                         i.Value.Muted = true;
-                        i.Value.Manager.Database.AddDatabaseOperation(db => db.MuteAccount(i.Value.AccountId));
+						i.Value.Manager.Database.DoActionAsync(db => db.MuteAccount(i.Value.AccountId));
                         player.SendInfo("Player Muted.");
                     }
                 }
@@ -489,7 +489,7 @@ namespace wServer.realm.commands
                     if (i.Value.Name.ToLower() == args[0].ToLower().Trim())
                     {
                         i.Value.Muted = true;
-                        i.Value.Manager.Database.AddDatabaseOperation(db => db.UnmuteAccount(i.Value.AccountId));
+						i.Value.Manager.Database.DoActionAsync(db => db.UnmuteAccount(i.Value.AccountId));
                         player.SendInfo("Player Unmuted.");
                     }
                 }

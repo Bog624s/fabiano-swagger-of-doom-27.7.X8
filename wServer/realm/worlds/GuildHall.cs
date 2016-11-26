@@ -19,7 +19,7 @@ namespace wServer.realm.worlds
 
         protected override void Init()
         {
-            Manager.Database.AddDatabaseOperation(db =>
+			Manager.Database.DoActionAsync(db =>
             {
                 switch (Level(db))
                 {
