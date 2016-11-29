@@ -13,7 +13,7 @@ namespace wServer.networking.handlers
     {
         public override PacketID ID
         {
-            get { return PacketID.LEAVEARENA; }
+            get { return PacketID.ACCEPT_ARENA_DEATH; }
         }
 
         protected override void HandlePacket(Client client, LeaveArenaPacket packet)

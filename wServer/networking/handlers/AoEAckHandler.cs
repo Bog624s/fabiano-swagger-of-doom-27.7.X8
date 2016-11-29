@@ -6,14 +6,14 @@ using wServer.networking.cliPackets;
 
 namespace wServer.networking.handlers
 {
-    internal class AOEAckHandler : PacketHandlerBase<AOEAckPacket>
+    internal class AOEAckHandler : PacketHandlerBase<AoeAckPacket>
     {
         public override PacketID ID
         {
             get { return PacketID.AOEACK; }
         }
 
-        protected override void HandlePacket(Client client, AOEAckPacket packet)
+        protected override void HandlePacket(Client client, AoeAckPacket packet)
         {
             //TODO: Implement something.
         }

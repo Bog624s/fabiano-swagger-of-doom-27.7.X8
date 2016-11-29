@@ -11,62 +11,62 @@ using wServer.realm.worlds;
 
 namespace wServer.realm.entities
 {
-    public class Pet : Entity, IPlayer
-    {
-        private Random rand;
-        private Position? spawn;
+	public class Pet : Entity, IPlayer
+	{
+		private Random rand;
+		private Position? spawn;
 
-        public Pet(RealmManager manager, PetItem petData, Player playerOwner)
-            : base(manager, (ushort)petData.Type, true, true)
-        {
-            rand = new Random();
-            PlayerOwner = playerOwner;
-            Info = petData;
+		public Pet(RealmManager manager, PetItem petData, Player playerOwner)
+			: base(manager, (ushort)petData.Type, true, true)
+		{
+			rand = new Random();
+			PlayerOwner = playerOwner;
+			Info = petData;
 
-            try
-            {
-                if (petData.InstanceId != -1)
-                {
-                    FirstPetLevel = new PetLevel(AbilityType.First,
-                        Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[0].Type)),
-                        petData.Abilities[0].Points, petData.Abilities[0].Power, this);
+			try
+			{
+				if (petData.InstanceId != -1)
+				{
+					FirstPetLevel = new PetLevel(AbilityType.First,
+						Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[0].Type)),
+						petData.Abilities[0].Points, petData.Abilities[0].Power, this);
 
-                    SecondPetLevel = new PetLevel(AbilityType.Second,
-                        Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[1].Type)),
-                        petData.Abilities[1].Points, petData.Abilities[1].Power, this);
+					SecondPetLevel = new PetLevel(AbilityType.Second,
+						Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[1].Type)),
+						petData.Abilities[1].Points, petData.Abilities[1].Power, this);
 
-                    ThirdPetLevel = new PetLevel(AbilityType.Third,
-                        Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[2].Type)),
-                        petData.Abilities[2].Points, petData.Abilities[2].Power, this);
+					ThirdPetLevel = new PetLevel(AbilityType.Third,
+						Utils.GetEnumByName<Ability>(Utils.GetEnumName<Ability>(petData.Abilities[2].Type)),
+						petData.Abilities[2].Points, petData.Abilities[2].Power, this);
 
-                    Size = manager.GameData.TypeToPet[(ushort)petData.Type].Size;
-                    PetRarity = (Rarity)petData.Rarity;
-                    PetFamily = manager.GameData.TypeToPet[(ushort)petData.Type].PetFamily;
-                    MaximumLevel = petData.MaxAbilityPower;
-                    UpdateNeeded = true;
-                }
-                Skin = petData.SkinName;
-                SkinId = petData.Skin;
-                PetId = petData.InstanceId;
-                IsPet = true;
-            }
-            catch (Exception e)
-            {
-                if (PlayerOwner != null)
-                    PlayerOwner.SendError(
-                        String.Format(
-                            "An error ocurred while loading your pet data, please report this to an Admin: {0}",
-                            e.Message));
-            }
-        }
+					Size = manager.GameData.TypeToPet[(ushort)petData.Type].Size;
+					PetRarity = (Rarity)petData.Rarity;
+					PetFamily = manager.GameData.TypeToPet[(ushort)petData.Type].PetFamily;
+					MaximumLevel = petData.MaxAbilityPower;
+					UpdateNeeded = true;
+				}
+				Skin = petData.SkinName;
+				SkinId = petData.Skin;
+				PetId = petData.InstanceId;
+				IsPet = true;
+			}
+			catch (Exception e)
+			{
+				if (PlayerOwner != null)
+					PlayerOwner.SendError(
+						String.Format(
+							"An error ocurred while loading your pet data, please report this to an Admin: {0}",
+							e.Message));
+			}
+		}
 
-        public int PetId { get; private set; }
-        public int SkinId { get; private set; }
-        public int MaximumLevel { get; private set; }
+		public int PetId { get; private set; }
+		public int SkinId { get; private set; }
+		public int MaximumLevel { get; private set; }
 
-        public string Skin { get; private set; }
+		public string Skin { get; private set; }
 
-        public bool UpdateNeeded { get; set; }
+		public bool UpdateNeeded { get; set; }
 
         public PetItem Info { get; private set; }
         public PetLevel FirstPetLevel { get; private set; }
@@ -184,9 +184,9 @@ namespace wServer.realm.entities
             base.Tick(time);
         }
 
-        public static async void Create(RealmManager manager, Player player, Item egg)
+        public static void Create(RealmManager manager, Player player, Item egg)
         {
-            await manager.Database.AddDatabaseOperation(db =>
+            manager.Database.AddDatabaseOperation(db =>
             {
                 PetStruct petStruct = GetPetStruct(manager, egg.Family, (Rarity)egg.Rarity);
                 PetSkin skin = manager.GameData.IdToPetSkin[petStruct.DefaultSkin];

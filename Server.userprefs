@@ -4,15 +4,6 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="wServer\Structures.cs">
-    <Files>
-      <File FileName="wServer\networking\handlers\InvSwapHandler.cs" Line="38" Column="14" />
-      <File FileName="wServer\realm\LogicTicker.cs" Line="81" Column="23" />
-      <File FileName="wServer\networking\cliPackets\InvSwapPacket.cs" Line="8" Column="22" />
-      <File FileName="wServer\networking\cliPackets\InvDropPacket.cs" Line="1" Column="1" />
-      <File FileName="wServer\networking\handlers\InvDropHandler.cs" Line="34" Column="14" />
-      <File FileName="wServer\Structures.cs" Line="144" Column="19" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.ItemProperties.server PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

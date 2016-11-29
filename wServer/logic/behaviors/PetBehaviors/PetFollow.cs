@@ -1,8 +1,12 @@
-﻿using Mono.Game;
+﻿#region
+
+using Mono.Game;
 using wServer.realm;
 using wServer.realm.entities;
 using wServer.realm.entities.player;
 using wServer.realm.worlds;
+
+#endregion
 
 namespace wServer.logic.behaviors.PetBehaviors
 {
