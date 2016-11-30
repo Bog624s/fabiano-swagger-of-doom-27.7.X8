@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.svrPackets
+﻿namespace wServer.networking.svrPackets
 {
-    public class UnlockedSkinPacket : ServerPacket
+    public class ReskinUnlockPacket : ServerPacket
     {
         public int SkinID { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.RESKIN_UNLOCK; }
-        }
+        public override PacketID ID => PacketID.RESKIN_UNLOCK;
 
         public override Packet CreateInstance()
         {
-            return new UnlockedSkinPacket();
+            return new ReskinUnlockPacket();
         }
 
         protected override void Read(Client client, NReader rdr)

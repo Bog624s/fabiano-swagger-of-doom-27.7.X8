@@ -6,10 +6,7 @@
         public int TickTime { get; set; }
         public ObjectStats[] UpdateStatuses { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.NEWTICK; }
-        }
+        public override PacketID ID => PacketID.NEWTICK;
 
         public override Packet CreateInstance()
         {
@@ -31,7 +28,7 @@
             wtr.Write(TickId);
             wtr.Write(TickTime);
 
-            wtr.Write((ushort) UpdateStatuses.Length);
+            wtr.Write((ushort)UpdateStatuses.Length);
             foreach (ObjectStats i in UpdateStatuses)
                 i.Write(psr, wtr);
         }

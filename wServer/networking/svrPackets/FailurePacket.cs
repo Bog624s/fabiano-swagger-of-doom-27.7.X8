@@ -2,13 +2,15 @@
 {
     public class FailurePacket : ServerPacket
     {
+		public const int INCORRECT_VERSION = 4;
+		public const int BAD_KEY = 5;
+		public const int INVALID_TELEPORT_TARGET = 6;
+		public const int EMAIL_VERIFICATION_NEEDED = 7;
+
         public int ErrorId { get; set; }
         public string ErrorDescription { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.FAILURE; }
-        }
+        public override PacketID ID => PacketID.FAILURE;
 
         public override Packet CreateInstance()
         {

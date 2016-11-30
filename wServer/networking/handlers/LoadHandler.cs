@@ -36,7 +36,7 @@ namespace wServer.networking.handlers
                     else
                     {
                         World target = client.Manager.Worlds[client.TargetWorld];
-                        client.SendPacket(new Create_SuccessPacket
+                        client.SendPacket(new CreateSuccessPacket
                         {
                             CharacterID = client.Character.CharacterId,
                             ObjectID =

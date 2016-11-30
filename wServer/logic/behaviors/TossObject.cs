@@ -65,7 +65,7 @@ namespace wServer.logic.behaviors
                 {
                     EffectType = EffectType.Throw,
                     Color = new ARGB(0xffffbf00),
-                    TargetId = host.Id,
+                    TargetObjectId = host.Id,
                     PosA = target
                 }, null);
                 host.Owner.Timers.Add(new WorldTimer(1500, (world, t) =>

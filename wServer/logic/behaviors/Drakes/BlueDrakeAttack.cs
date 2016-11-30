@@ -36,15 +36,15 @@ namespace wServer.logic.behaviors.Drakes
                 {
                     en.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.AreaBlast,
+                        EffectType = EffectType.Nova,
                         Color = new ARGB(0x003298),
-                        TargetId = en.Id,
+                        TargetObjectId = en.Id,
                         PosA = new Position { X = 1, }
                     }, null);
                     en.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.Trail,
-                        TargetId = host.Id,
+                        EffectType = EffectType.Line,
+                        TargetObjectId = host.Id,
                         PosA = new Position { X = en.X, Y = en.Y },
                         Color = new ARGB(0x003298)
                     }, null);

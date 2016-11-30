@@ -4,10 +4,7 @@
     {
         public bool[] Offers { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.TRADECHANGED; }
-        }
+        public override PacketID ID => PacketID.TRADECHANGED;
 
         public override Packet CreateInstance()
         {
@@ -23,7 +20,7 @@
 
         protected override void Write(Client psr, NWriter wtr)
         {
-            wtr.Write((ushort) Offers.Length);
+            wtr.Write((ushort)Offers.Length);
             foreach (bool i in Offers)
                 wtr.Write(i);
         }

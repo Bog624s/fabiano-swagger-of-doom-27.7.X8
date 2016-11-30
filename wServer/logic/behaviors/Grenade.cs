@@ -63,12 +63,12 @@ namespace wServer.logic.behaviors
                     {
                         EffectType = EffectType.Throw,
                         Color = new ARGB(0xffff0000),
-                        TargetId = host.Id,
+                        TargetObjectId = host.Id,
                         PosA = target
                     }, null);
                     host.Owner.Timers.Add(new WorldTimer(1500, (world, t) =>
                     {
-                        world.BroadcastPacket(new AOEPacket
+                        world.BroadcastPacket(new AoePacket
                         {
                             Position = target,
                             Radius = radius,

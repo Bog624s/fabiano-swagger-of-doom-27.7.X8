@@ -10,10 +10,7 @@
         public string Text { get; set; }
         public string CleanText { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.TEXT; }
-        }
+        public override PacketID ID => PacketID.TEXT;
 
         public override Packet CreateInstance()
         {

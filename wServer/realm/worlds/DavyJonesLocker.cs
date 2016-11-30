@@ -28,7 +28,7 @@ namespace wServer.realm.worlds
         {
             int ret = base.EnterWorld(entity);
             if (entity is Player)
-                (entity as Player).Client.SendPacket(new networking.svrPackets.Global_NotificationPacket
+                (entity as Player).Client.SendPacket(new networking.svrPackets.GlobalNotificationPacket
                 {
                     Text = "showKeyUI",
                     Type = 0
@@ -39,7 +39,7 @@ namespace wServer.realm.worlds
         public override void LeaveWorld(Entity entity)
         {
             if(entity is Player)
-                (entity as Player).Client.SendPacket(new networking.svrPackets.Global_NotificationPacket
+                (entity as Player).Client.SendPacket(new networking.svrPackets.GlobalNotificationPacket
                 {
                     Text = "showKeyUI",
                     Type = 0

@@ -94,7 +94,7 @@ namespace wServer.networking.handlers
                 cmd.Parameters.AddWithValue("@type", client.Account.PetYardType);
                 cmd.Parameters.AddWithValue("@accId", client.Account.AccountId);
                 cmd.ExecuteNonQuery();
-                client.SendPacket(new UpgradePetYardResultPacket
+                client.SendPacket(new PetUpgradeRequestPacket
                 {
                     Type = client.Account.PetYardType
                 });
@@ -235,21 +235,21 @@ namespace wServer.networking.handlers
             {
                 Fuse(client, pet1, pet2);
 
-                client.SendPacket(new RemovePetFromListPacket
+                client.SendPacket(new DeletePetMessagePacket
                 {
                     PetId = pet2.PetId
                 });
 
                 if (pet1.PetRarity == Rarity.Uncommon)
                 {
-                    client.SendPacket(new NewAbilityUnlockedPacket
+                    client.SendPacket(new NewAbilityPacket
                     {
                         Type = pet1.SecondPetLevel.Ability
                     });
                 }
                 else
                 {
-                    client.SendPacket(new NewAbilityUnlockedPacket
+                    client.SendPacket(new NewAbilityPacket
                     {
                         Type = pet1.ThirdPetLevel.Ability
                     });
@@ -260,16 +260,16 @@ namespace wServer.networking.handlers
                 int oldSkin = (client.Player.Owner as PetYard).FindPetById(packet.PetId1).SkinId;
                 Evolve(client, pet1, pet2);
 
-                client.SendPacket(new RemovePetFromListPacket
+                client.SendPacket(new DeletePetMessagePacket
                 {
                     PetId = pet2.PetId
                 });
 
-                client.SendPacket(new PetEvolveResultPacket
+                client.SendPacket(new EvolvedPetMessagePacket
                 {
-                    PetId1 = packet.PetId1,
-                    SkinId1 = oldSkin,
-                    SkinId2 = (client.Player.Owner as PetYard).FindPetById(packet.PetId1).SkinId
+                    PetId = packet.PetId1,
+                    InitialSkin = oldSkin,
+                    FinalSkin = (client.Player.Owner as PetYard).FindPetById(packet.PetId1).SkinId
                 });
             }
 

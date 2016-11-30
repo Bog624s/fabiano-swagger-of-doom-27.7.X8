@@ -34,10 +34,10 @@ namespace wServer.networking.handlers
                         {
                             if (db.GetGuild(name) != null)
                             {
-                                player.Client.SendPacket(new CreateGuildResultPacket()
+                                player.Client.SendPacket(new GuildResultPacket()
                                 {
                                     Success = false,
-                                    ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild already exists.\"}}"
+                                    LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild already exists.\"}}"
                                 });
                                 return;
                             }
@@ -51,10 +51,10 @@ namespace wServer.networking.handlers
                                         player.Client.Account.Guild.Name = g.Name;
                                         player.Client.Account.Guild.Rank = g.Rank;
                                         player.Guild = GuildManager.Add(player, g);
-                                        player.Client.SendPacket(new CreateGuildResultPacket()
+                                        player.Client.SendPacket(new GuildResultPacket()
                                         {
                                             Success = true,
-                                            ErrorText = "{\"key\":\"server.buy_success\"}"
+                                            LineBuilderJSON = "{\"key\":\"server.buy_success\"}"
                                         });
                                         player.CurrentFame = player.Client.Account.Stats.Fame = db.UpdateFame(player.Client.Account, -1000);
                                         player.UpdateCount++;
@@ -62,59 +62,59 @@ namespace wServer.networking.handlers
                                     }
                                     else
                                     {
-                                        player.Client.SendPacket(new CreateGuildResultPacket()
+                                        player.Client.SendPacket(new GuildResultPacket()
                                         {
                                             Success = false,
-                                            ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild name cannot be blank.\"}}"
+                                            LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild name cannot be blank.\"}}"
                                         });
                                         return;
                                     }
                                 }
                                 else
                                 {
-                                    player.Client.SendPacket(new CreateGuildResultPacket()
+                                    player.Client.SendPacket(new GuildResultPacket()
                                     {
                                         Success = false,
-                                        ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"You cannot create a guild as a guild member.\"}}"
+                                        LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"You cannot create a guild as a guild member.\"}}"
                                     });
                                     return;
                                 }
                             }
                             catch (Exception e)
                             {
-                                player.Client.SendPacket(new CreateGuildResultPacket()
+                                player.Client.SendPacket(new GuildResultPacket()
                                 {
                                     Success = false,
-                                    ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"" + e.Message + "\"}}"
+                                    LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"" + e.Message + "\"}}"
                                 });
                                 return;
                             }
                         }
                         else
                         {
-                            player.Client.SendPacket(new CreateGuildResultPacket()
+                            player.Client.SendPacket(new GuildResultPacket()
                             {
                                 Success = false,
-                                ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild name cannot be blank.\"}}"
+                                LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"Guild name cannot be blank.\"}}"
                             });
                         }
                     }
                     else
                     {
-                        player.Client.SendPacket(new CreateGuildResultPacket()
+                        player.Client.SendPacket(new GuildResultPacket()
                         {
                             Success = false,
-                            ErrorText = "{\"key\":\"server.not_enough_fame\"}"
+                            LineBuilderJSON = "{\"key\":\"server.not_enough_fame\"}"
                         });
                     }
                 });
             }
             catch (Exception e)
             {
-                client.SendPacket(new CreateGuildResultPacket()
+                client.SendPacket(new GuildResultPacket()
                 {
                     Success = false,
-                    ErrorText = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"" + e.Message + "\"}}"
+                    LineBuilderJSON = "{\"key\":\"server.create_guild_error\",\"tokens\":{\"error\":\"" + e.Message + "\"}}"
                 });
             }
         }

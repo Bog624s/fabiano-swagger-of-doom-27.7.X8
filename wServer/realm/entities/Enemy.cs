@@ -96,7 +96,7 @@ namespace wServer.realm.entities
                     {
                         TargetId = Id,
                         Effects = 0,
-                        Damage = (ushort)dmg,
+                        DamageAmount = (ushort)dmg,
                         Killed = HP < 0,
                         BulletId = 0,
                         ObjectId = from.Id
@@ -110,7 +110,7 @@ namespace wServer.realm.entities
                     {
                         TargetId = Id,
                         Effects = 0,
-                        Damage = (ushort)dmg,
+                        DamageAmount = (ushort)dmg,
                         Killed = HP < 0,
                         BulletId = 0,
                         ObjectId = -1
@@ -148,7 +148,7 @@ namespace wServer.realm.entities
                 {
                     TargetId = Id,
                     Effects = projectile.ConditionEffects,
-                    Damage = (ushort) dmg,
+                    DamageAmount = (ushort) dmg,
                     Killed = HP < 0,
                     BulletId = projectile.ProjectileId,
                     ObjectId = projectile.ProjectileOwner.Self.Id

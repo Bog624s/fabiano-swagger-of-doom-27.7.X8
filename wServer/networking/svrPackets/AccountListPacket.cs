@@ -9,10 +9,7 @@
         public string[] AccountIds { get; set; }
         public int LockAction { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ACCOUNTLIST; }
-        }
+        public override PacketID ID => PacketID.ACCOUNTLIST;
 
         public override Packet CreateInstance()
         {
@@ -31,7 +28,7 @@
         protected override void Write(Client psr, NWriter wtr)
         {
             wtr.Write(AccountListId);
-            wtr.Write((ushort) AccountIds.Length);
+            wtr.Write((ushort)AccountIds.Length);
             foreach (string i in AccountIds)
                 wtr.WriteUTF(i);
             wtr.Write(LockAction);

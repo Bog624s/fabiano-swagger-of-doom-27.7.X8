@@ -7,10 +7,7 @@
         public short ContainerType { get; set; }
         public float Angle { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ALLYSHOOT; }
-        }
+        public override PacketID ID => PacketID.ALLYSHOOT;
 
         public override Packet CreateInstance()
         {

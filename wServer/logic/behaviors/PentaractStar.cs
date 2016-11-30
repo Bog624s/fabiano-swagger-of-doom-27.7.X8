@@ -50,7 +50,7 @@ namespace wServer.logic.behaviors
                         {
                             ObjectId = i.Id,
                             Color = new ARGB(0xFF00FF00),
-                            Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Quest Complete!\"}}"
+                            Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Quest Complete!\"}}"
                         });
 
                     if (host.Owner is GameWorld)
@@ -68,7 +68,7 @@ namespace wServer.logic.behaviors
                         {
                             packets.Add(new ShowEffectPacket
                             {
-                                TargetId = entities[i].Id,
+                                TargetObjectId = entities[i].Id,
                                 EffectType = EffectType.Stream,
                                 Color = new ARGB(hasCorpse ? 0xFFFFFF : 0xffff0000),
                                 PosA = new Position

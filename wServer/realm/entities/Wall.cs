@@ -26,7 +26,7 @@ namespace wServer.realm.entities
             {
                 TargetId = Id,
                 Effects = 0,
-                Damage = (ushort) dmg,
+                DamageAmount = (ushort) dmg,
                 Killed = !CheckHP(),
                 BulletId = projectile.ProjectileId,
                 ObjectId = projectile.ProjectileOwner.Self.Id

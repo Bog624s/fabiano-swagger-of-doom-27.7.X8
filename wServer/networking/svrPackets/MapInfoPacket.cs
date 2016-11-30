@@ -5,7 +5,7 @@
         public int Width { get; set; }
         public int Height { get; set; }
         public string Name { get; set; }
-        public string ClientWorldName { get; set; }
+        public string DisplayName { get; set; }
         public int Difficulty { get; set; }
         public uint Seed { get; set; }
         public int Background { get; set; }
@@ -14,10 +14,7 @@
         public string[] ClientXML { get; set; }
         public string[] ExtraXML { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.MAPINFO; }
-        }
+        public override PacketID ID => PacketID.MAPINFO;
 
         public override Packet CreateInstance()
         {
@@ -29,7 +26,7 @@
             Width = rdr.ReadInt32();
             Height = rdr.ReadInt32();
             Name = rdr.ReadUTF();
-            ClientWorldName = rdr.ReadUTF();
+            DisplayName = rdr.ReadUTF();
             Seed = rdr.ReadUInt32();
             Background = rdr.ReadInt32();
             Difficulty = rdr.ReadInt32();
@@ -50,18 +47,18 @@
             wtr.Write(Width);
             wtr.Write(Height);
             wtr.WriteUTF(Name);
-            wtr.WriteUTF(ClientWorldName);
+            wtr.WriteUTF(DisplayName);
             wtr.Write(Seed);
             wtr.Write(Background);
             wtr.Write(Difficulty);
             wtr.Write(AllowTeleport);
             wtr.Write(ShowDisplays);
 
-            wtr.Write((ushort) ClientXML.Length);
+            wtr.Write((ushort)ClientXML.Length);
             foreach (string i in ClientXML)
                 wtr.Write32UTF(i);
 
-            wtr.Write((ushort) ExtraXML.Length);
+            wtr.Write((ushort)ExtraXML.Length);
             foreach (string i in ExtraXML)
                 wtr.Write32UTF(i);
         }

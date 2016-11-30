@@ -290,7 +290,6 @@
     <Compile Include="networking\cliPackets\PlayerTextPacket.cs" />
     <Compile Include="networking\cliPackets\PongPacket.cs" />
     <Compile Include="networking\cliPackets\RequestTradePacket.cs" />
-    <Compile Include="networking\cliPackets\ReskinPacket.cs" />
     <Compile Include="networking\cliPackets\SetConditionPacket.cs" />
     <Compile Include="networking\cliPackets\ShootAckPacket.cs" />
     <Compile Include="networking\cliPackets\SquareHitPacket.cs" />
@@ -344,19 +343,19 @@
     <Compile Include="networking\IPacketHandler.cs" />
     <Compile Include="networking\NetworkHandler.cs" />
     <Compile Include="networking\svrPackets\ArenaDeathPacket.cs" />
-    <Compile Include="networking\svrPackets\ArenaNextWavePacket.cs" />
+    <Compile Include="networking\svrPackets\ImminentArenaWavePacket.cs" />
     <Compile Include="networking\svrPackets\PasswordPromtPacket.cs" />
     <Compile Include="networking\svrPackets\QuestFetchResponsePacket.cs" />
     <Compile Include="networking\svrPackets\QuestRedeemResponsePacket.cs" />
-    <Compile Include="networking\svrPackets\UnlockedSkinPacket.cs" />
+    <Compile Include="networking\svrPackets\ReskinUnlockPacket.cs" />
     <Compile Include="networking\svrPackets\VerifyEmailDialogPacket.cs" />
     <Compile Include="networking\cliPackets\ActivePetUpdateRequestPacket.cs" />
-    <Compile Include="networking\svrPackets\UpdatePetPacket.cs" />
-    <Compile Include="networking\svrPackets\HatchEggPacket.cs" />
-    <Compile Include="networking\svrPackets\NewAbilityUnlockedPacket.cs" />
-    <Compile Include="networking\svrPackets\UpgradePetYardResultPacket.cs" />
-    <Compile Include="networking\svrPackets\PetEvolveResultPacket.cs" />
-    <Compile Include="networking\svrPackets\RemovePetFromListPacket.cs" />
+    <Compile Include="networking\svrPackets\ActivePetUpdatePacket.cs" />
+    <Compile Include="networking\svrPackets\HatchPetMessagePacket.cs" />
+    <Compile Include="networking\svrPackets\NewAbilityPacket.cs" />
+    <Compile Include="networking\svrPackets\PetUpgradeRequestPacket.cs" />
+    <Compile Include="networking\svrPackets\EvolvedPetMessagePacket.cs" />
+    <Compile Include="networking\svrPackets\DeletePetMessagePacket.cs" />
     <Compile Include="PacketIds.cs" />
     <Compile Include="networking\PolicyServer.cs" />
     <Compile Include="Program.cs" />
@@ -486,16 +485,16 @@
     <Compile Include="RSA.cs" />
     <Compile Include="networking\svrPackets\AccountListPacket.cs" />
     <Compile Include="networking\svrPackets\AllyShootPacket.cs" />
-    <Compile Include="networking\svrPackets\AoEPacket.cs" />
+    <Compile Include="networking\svrPackets\AoePacket.cs" />
     <Compile Include="networking\svrPackets\BuyResultPacket.cs" />
     <Compile Include="networking\svrPackets\ClientStatPacket.cs" />
-    <Compile Include="networking\svrPackets\CreateGuildResultPacket.cs" />
-    <Compile Include="networking\svrPackets\Create_SuccessPacket.cs" />
+    <Compile Include="networking\svrPackets\GuildResultPacket.cs" />
+    <Compile Include="networking\svrPackets\CreateSuccessPacket.cs" />
     <Compile Include="networking\svrPackets\DamagePacket.cs" />
     <Compile Include="networking\svrPackets\DeathPacket.cs" />
     <Compile Include="networking\svrPackets\FailurePacket.cs" />
     <Compile Include="networking\svrPackets\FilePacket.cs" />
-    <Compile Include="networking\svrPackets\Global_NotificationPacket.cs" />
+    <Compile Include="networking\svrPackets\GlobalNotificationPacket.cs" />
     <Compile Include="networking\svrPackets\GotoPacket.cs" />
     <Compile Include="networking\svrPackets\InvitedToGuildPacket.cs" />
     <Compile Include="networking\svrPackets\InvResultPacket.cs" />
@@ -509,8 +508,8 @@
     <Compile Include="networking\svrPackets\QuestObjIdPacket.cs" />
     <Compile Include="networking\svrPackets\ReconnectPacket.cs" />
     <Compile Include="networking\svrPackets\ServerPacket.cs" />
-    <Compile Include="networking\svrPackets\Shoot2Packet.cs" />
-    <Compile Include="networking\svrPackets\ShootPacket.cs" />
+    <Compile Include="networking\svrPackets\ServerPlayerShootPacket.cs" />
+    <Compile Include="networking\svrPackets\EnemyShootPacket.cs" />
     <Compile Include="networking\svrPackets\ShowEffectPacket.cs" />
     <Compile Include="networking\svrPackets\TextPacket.cs" />
     <Compile Include="networking\svrPackets\TradeAcceptedPacket.cs" />
@@ -524,6 +523,8 @@
     <Compile Include="wRandom.cs" />
     <Compile Include="networking\handlers\AoEAckHandler.cs" />
     <Compile Include="networking\cliPackets\KeyInfoRequestPacket.cs" />
+    <Compile Include="networking\svrPackets\KeyInfoResponsePacket.cs" />
+    <Compile Include="networking\cliPackets\ReskinPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="air_icon.ico" />

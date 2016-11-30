@@ -37,9 +37,9 @@ namespace wServer.realm.entities
             {
                 Owner.BroadcastPacket(new ShowEffectPacket
                 {
-                    EffectType = EffectType.Trap,
+                    EffectType = EffectType.Ring,
                     Color = new ARGB(0xff9000ff),
-                    TargetId = Id,
+                    TargetObjectId = Id,
                     PosA = new Position {X = radius/2}
                 }, null);
                 p++;
@@ -63,9 +63,9 @@ namespace wServer.realm.entities
         {
             Owner.BroadcastPacket(new ShowEffectPacket
             {
-                EffectType = EffectType.AreaBlast,
+                EffectType = EffectType.Nova,
                 Color = new ARGB(0xff9000ff),
-                TargetId = Id,
+                TargetObjectId = Id,
                 PosA = new Position {X = radius}
             }, null);
             this.Aoe(radius, false, enemy =>

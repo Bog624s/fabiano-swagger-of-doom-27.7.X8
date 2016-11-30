@@ -102,11 +102,11 @@ namespace wServer.logic.behaviors
                             prjId = prj.ProjectileId;
                     }
 
-                    host.Owner.BroadcastPacket(new ShootPacket
+                    host.Owner.BroadcastPacket(new EnemyShootPacket
                     {
                         BulletId = prjId,
                         OwnerId = host.Id,
-                        Position = prjPos,
+                        StartingPosition = prjPos,
                         Angle = (float)startAngle,
                         Damage = (short)dmg,
                         BulletType = (byte)desc.BulletType,

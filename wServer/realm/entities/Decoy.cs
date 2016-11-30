@@ -82,9 +82,9 @@ namespace wServer.realm.entities
                 exploded = true;
                 Owner.BroadcastPacket(new ShowEffectPacket()
                 {
-                    EffectType = EffectType.AreaBlast,
+                    EffectType = EffectType.Nova,
                     Color = new ARGB(0xffff0000),
-                    TargetId = Id,
+                    TargetObjectId = Id,
                     PosA = new Position() { X = 1 }
                 }, null);
             }

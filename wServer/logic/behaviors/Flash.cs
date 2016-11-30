@@ -30,9 +30,9 @@ namespace wServer.logic.behaviors
         {
             host.Owner.BroadcastPacket(new ShowEffectPacket
             {
-                EffectType = EffectType.Flashing,
+                EffectType = EffectType.Flash,
                 PosA = new Position {X = flashPeriod, Y = flashRepeats},
-                TargetId = host.Id,
+                TargetObjectId = host.Id,
                 Color = new ARGB(color)
             }, null);
         }

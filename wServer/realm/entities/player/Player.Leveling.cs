@@ -181,7 +181,7 @@ namespace wServer.realm.entities.player
                 {
                     ObjectId = Id,
                     Color = new ARGB(0xFF00FF00),
-                    Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Class Quest Complete!\"}}",
+                    Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Class Quest Complete!\"}}",
                 }, null);
                 Stars = GetStars();
             }
@@ -235,7 +235,7 @@ namespace wServer.realm.entities.player
                 {
                     ObjectId = Id,
                     Color = new ARGB(0xFF00FF00),
-                    Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Quest Complete!\"}}",
+                    Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Quest Complete!\"}}",
                 }, null);
             if (exp > 0)
             {

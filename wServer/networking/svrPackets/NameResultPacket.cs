@@ -5,10 +5,7 @@
         public bool Success { get; set; }
         public string ErrorText { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.NAMERESULT; }
-        }
+        public override PacketID ID => PacketID.NAMERESULT;
 
         public override Packet CreateInstance()
         {

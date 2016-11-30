@@ -260,7 +260,7 @@ namespace wServer.realm
                 SendMsg(i, "COME MEET YOUR DOOM AT THE WALLS OF MY CASTLE!", "#Oryx the Mad God");
                 i.Client.SendPacket(new ShowEffectPacket
                 {
-                    EffectType = EffectType.Earthquake
+                    EffectType = EffectType.Jitter
                 });
             }
             world.Timers.Add(new WorldTimer(10000, (w, t) => w.Manager.RemoveWorld(w)));

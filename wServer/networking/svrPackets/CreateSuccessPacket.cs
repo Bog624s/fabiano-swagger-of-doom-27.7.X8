@@ -1,18 +1,15 @@
 ﻿namespace wServer.networking.svrPackets
 {
-    public class Create_SuccessPacket : ServerPacket
+    public class CreateSuccessPacket : ServerPacket
     {
         public int ObjectID { get; set; }
         public int CharacterID { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.CREATE_SUCCESS; }
-        }
+        public override PacketID ID => PacketID.CREATE_SUCCESS;
 
         public override Packet CreateInstance()
         {
-            return new Create_SuccessPacket();
+            return new CreateSuccessPacket();
         }
 
         protected override void Read(Client psr, NReader rdr)

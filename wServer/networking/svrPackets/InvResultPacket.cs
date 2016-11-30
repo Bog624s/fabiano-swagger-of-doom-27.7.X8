@@ -4,10 +4,7 @@
     {
         public int Result { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.INVRESULT; }
-        }
+        public override PacketID ID => PacketID.INVRESULT;
 
         public override Packet CreateInstance()
         {

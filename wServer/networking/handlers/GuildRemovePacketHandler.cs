@@ -74,10 +74,10 @@ namespace wServer.networking.handlers
                         Text = e.Message
                     });
                 }
-                client.SendPacket(new CreateGuildResultPacket()
+                client.SendPacket(new GuildResultPacket()
                 {
                     Success = true,
-                    ErrorText = ""
+                    LineBuilderJSON = ""
                 });
             });
         }

@@ -10,10 +10,7 @@
         public bool IsFromArena { get; set; }
         public byte[] Key { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.RECONNECT; }
-        }
+        public override PacketID ID => PacketID.RECONNECT;
 
         public override Packet CreateInstance()
         {
@@ -40,7 +37,7 @@
             wtr.Write(GameId);
             wtr.Write(KeyTime);
             wtr.Write(IsFromArena);
-            wtr.Write((ushort) Key.Length);
+            wtr.Write((ushort)Key.Length);
             wtr.Write(Key);
         }
     }

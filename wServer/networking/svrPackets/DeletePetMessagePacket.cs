@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.svrPackets
+﻿namespace wServer.networking.svrPackets
 {
-    public class UpdatePetPacket : ServerPacket
+    public class DeletePetMessagePacket : ServerPacket
     {
         public int PetId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ACTIVEPETUPDATE; }
-        }
+        public override PacketID ID => PacketID.DELETE_PET;
 
         public override Packet CreateInstance()
         {
-            return new UpdatePetPacket();
+            return new DeletePetMessagePacket();
         }
 
         protected override void Read(Client client, NReader rdr)

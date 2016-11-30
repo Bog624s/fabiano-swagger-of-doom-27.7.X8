@@ -2,13 +2,20 @@
 {
     public class BuyResultPacket : ServerPacket
     {
+		public const int UNKNOWN_ERROR = -1;
+		public const int SUCCESS = 0;
+		public const int INVALID_CHARACTER = 1;
+		public const int ITEM_NOT_FOUND = 2;
+		public const int NOT_ENOUGH_GOLD = 3;
+		public const int INVENTORY_FULL = 4;
+		public const int TOO_LOW_RANK = 5;
+		public const int NOT_ENOUGH_FAME = 6;
+		public const int PET_FEED_SUCCESS = 7;
+
         public int Result { get; set; }
         public string Message { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.BUYRESULT; }
-        }
+        public override PacketID ID => PacketID.BUYRESULT;
 
         public override Packet CreateInstance()
         {

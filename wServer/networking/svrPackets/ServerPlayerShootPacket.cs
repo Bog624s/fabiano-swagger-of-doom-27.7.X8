@@ -1,6 +1,6 @@
 ﻿namespace wServer.networking.svrPackets
 {
-    public class Shoot2Packet : ServerPacket
+    public class ServerPlayerShootPacket : ServerPacket
     {
         public byte BulletId { get; set; }
         public int OwnerId { get; set; }
@@ -9,14 +9,11 @@
         public float Angle { get; set; }
         public short Damage { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.SERVERPLAYERSHOOT; }
-        }
+        public override PacketID ID => PacketID.SERVERPLAYERSHOOT;
 
         public override Packet CreateInstance()
         {
-            return new Shoot2Packet();
+            return new ServerPlayerShootPacket();
         }
 
         protected override void Read(Client psr, NReader rdr)

@@ -43,15 +43,15 @@ namespace wServer.logic.behaviors.PetBehaviors
                     {
                         player.Owner.BroadcastPacket(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Trail,
-                            TargetId = pet.Id,
+                            EffectType = EffectType.Line,
+                            TargetObjectId = pet.Id,
                             PosA = new Position {X = player.X, Y = player.Y},
                             Color = new ARGB(0xffffffff)
                         }, null);
                         player.Owner.BroadcastPacket(new NotificationPacket
                         {
                             ObjectId = player.Id,
-                            Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"No Effect\"}}",
+                            Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"No Effect\"}}",
                             Color = new ARGB(0xFF0000)
                         }, null);
                         state = cool;
@@ -62,21 +62,21 @@ namespace wServer.logic.behaviors.PetBehaviors
                     player.UpdateCount++;
                     player.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.Potion,
-                        TargetId = player.Id,
+                        EffectType = EffectType.Heal,
+                        TargetObjectId = player.Id,
                         Color = new ARGB(0xffffffff)
                     }, null);
                     player.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.Trail,
-                        TargetId = pet.Id,
+                        EffectType = EffectType.Line,
+                        TargetObjectId = pet.Id,
                         PosA = new Position {X = player.X, Y = player.Y},
                         Color = new ARGB(0xffffffff)
                     }, null);
                     player.Owner.BroadcastPacket(new NotificationPacket
                     {
                         ObjectId = player.Id,
-                        Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
+                        Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
                         Color = new ARGB(0xff00ff00)
                     }, null);
                 }

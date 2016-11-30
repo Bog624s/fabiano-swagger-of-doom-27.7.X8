@@ -59,10 +59,10 @@ namespace wServer.networking.handlers
                 else
                     client.Player.SendInfo("Members and initiates cannot promote!");
 
-                client.SendPacket(new CreateGuildResultPacket()
+                client.SendPacket(new GuildResultPacket()
                 {
                     Success = true,
-                    ErrorText = ""
+                    LineBuilderJSON = ""
                 });
             });
         }

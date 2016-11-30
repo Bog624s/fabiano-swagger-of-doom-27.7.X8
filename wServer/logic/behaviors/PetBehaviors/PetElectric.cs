@@ -53,16 +53,16 @@ namespace wServer.logic.behaviors.PetBehaviors
 
                     e.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.ElectricFlashing,
+                        EffectType = EffectType.Shockee,
                         PosA = new Position { X = level.Level * 40},
-                        TargetId = e.Id
+                        TargetObjectId = e.Id
                     }, null);
 
                     host.Owner.BroadcastPacket(new ShowEffectPacket
                     {
                         PosA = new Position { X = host.X, Y = host.Y },
-                        EffectType = EffectType.ElectricBolts,
-                        TargetId = host.Id,
+                        EffectType = EffectType.Shocker,
+                        TargetObjectId = host.Id,
                     }, null);
 
                     e.Damage(null, time, level.Level, true, new ConditionEffect

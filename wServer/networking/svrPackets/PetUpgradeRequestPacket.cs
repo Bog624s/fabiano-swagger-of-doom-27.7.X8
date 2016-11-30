@@ -1,17 +1,17 @@
 ﻿namespace wServer.networking.svrPackets
 {
-    public class ArenaNextWavePacket : ServerPacket
+    public class PetUpgradeRequestPacket : ServerPacket
     {
-        public int Type { get; set; } //Not sure for what the type is, but u need it
+		public const int GOLD_PAYMENT_TYPE = 0;
+		public const int FAME_PAYMENT_TYPE = 1;
 
-        public override PacketID ID
-        {
-            get { return PacketID.IMMINENT_ARENA_WAVE; }
-        }
+        public int Type { get; set; }
+
+        public override PacketID ID => PacketID.PETYARDUPDATE;
 
         public override Packet CreateInstance()
         {
-            return new ArenaNextWavePacket();
+            return new PetUpgradeRequestPacket();
         }
 
         protected override void Read(Client client, NReader rdr)

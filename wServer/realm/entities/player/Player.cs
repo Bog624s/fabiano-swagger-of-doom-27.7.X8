@@ -298,7 +298,7 @@ namespace wServer.realm.entities.player
                 {
                     TargetId = Id,
                     Effects = 0,
-                    Damage = (ushort)dmg,
+                    DamageAmount = (ushort)dmg,
                     Killed = HP <= 0,
                     BulletId = 0,
                     ObjectId = chr.Id
@@ -509,8 +509,8 @@ namespace wServer.realm.entities.player
                         AccountId = AccountId,
                         CharId = Client.Character.CharacterId,
                         Killer = killer,
-                        obf0 = -1,
-                        obf1 = -1,
+                        ZombieId = -1,
+                        ZombieType = -1,
                     });
                     Owner.Timers.Add(new WorldTimer(1000, (w, t) => Client.Disconnect()));
                     Owner.LeaveWorld(this);
@@ -565,7 +565,7 @@ namespace wServer.realm.entities.player
 
             if (owner.Id == World.NEXUS_ID || owner.Name == "Vault")
             {
-                Client.SendPacket(new Global_NotificationPacket
+                Client.SendPacket(new GlobalNotificationPacket
                 {
                     Type = 0,
                     Text = Client.Account.Gifts.Count > 0 ? "giftChestOccupied" : "giftChestEmpty"
@@ -733,7 +733,7 @@ namespace wServer.realm.entities.player
             Owner.BroadcastPacket(new ShowEffectPacket
             {
                 EffectType = EffectType.Teleport,
-                TargetId = Id,
+                TargetObjectId = Id,
                 PosA = new Position
                 {
                     X = X,

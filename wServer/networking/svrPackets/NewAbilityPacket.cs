@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.svrPackets
+﻿namespace wServer.networking.svrPackets
 {
-    public class NewAbilityUnlockedPacket : ServerPacket
+    public class NewAbilityPacket : ServerPacket
     {
         public Ability Type { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.NEW_ABILITY; }
-        }
+        public override PacketID ID => PacketID.NEW_ABILITY;
 
         public override Packet CreateInstance()
         {
-            return new NewAbilityUnlockedPacket();
+            return new NewAbilityPacket();
         }
 
         protected override void Read(Client client, NReader rdr)

@@ -262,10 +262,10 @@ namespace wServer.realm.entities
                 pet.Move(x + 0.5f, y + 0.5f);
                 db.CreatePet(player.Client.Account, item);
                 player.Owner.EnterWorld(pet);
-                player.Client.SendPacket(new HatchEggPacket
+                player.Client.SendPacket(new HatchPetMessagePacket
                 {
                     PetName = skin.DisplayId,
-                    PetSkinId = skin.ObjectType
+                    PetSkin = skin.ObjectType
                 });
                 player.Client.SendPacket(new UpdatePacket
                 {

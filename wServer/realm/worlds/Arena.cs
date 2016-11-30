@@ -71,9 +71,9 @@ namespace wServer.realm.worlds
                     wave++;
                     foreach (KeyValuePair<int, Player> i in Players)
                     {
-                        i.Value.Client.SendPacket(new ArenaNextWavePacket
+                        i.Value.Client.SendPacket(new ImminentArenaWavePacket
                         {
-                            Type = wave
+							CurrentRuntime = wave
                         });
                     }
                     waiting = true;

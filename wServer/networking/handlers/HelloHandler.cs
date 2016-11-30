@@ -160,7 +160,7 @@ namespace wServer.networking.handlers
                         Height = world.Map.Height,
                         Name = world.Name,
                         Seed = world.Seed,
-                        ClientWorldName = world.ClientWorldName,
+                        DisplayName = world.ClientWorldName,
                         Difficulty = world.Difficulty,
                         Background = world.Background,
                         AllowTeleport = world.AllowTeleport,

@@ -50,8 +50,8 @@ namespace wServer.logic.behaviors
 
                     host.Owner.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.AreaBlast,
-                        TargetId = host.Id,
+                        EffectType = EffectType.Nova,
+                        TargetObjectId = host.Id,
                         PosA = new Position { X = radius, Y = 0 },
                         Color = color
                     }, null);

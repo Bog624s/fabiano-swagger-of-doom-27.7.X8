@@ -1,24 +1,24 @@
 ﻿namespace wServer.networking.svrPackets
 {
-    public class ArenaDeathPacket : ServerPacket
+    public class ActivePetUpdatePacket : ServerPacket
     {
-        public int RestartPrice { get; set; }
+        public int PetId { get; set; }
 
-        public override PacketID ID => PacketID.ARENA_DEATH;
+        public override PacketID ID => PacketID.ACTIVEPETUPDATE;
 
         public override Packet CreateInstance()
         {
-            return new ArenaDeathPacket();
+            return new ActivePetUpdatePacket();
         }
 
         protected override void Read(Client client, NReader rdr)
         {
-            RestartPrice = rdr.ReadInt32();
+            PetId = rdr.ReadInt32();
         }
 
         protected override void Write(Client client, NWriter wtr)
         {
-            wtr.Write(RestartPrice);
+            wtr.Write(PetId);
         }
     }
 }

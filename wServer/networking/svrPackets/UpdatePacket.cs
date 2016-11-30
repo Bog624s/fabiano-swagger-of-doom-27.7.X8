@@ -8,10 +8,7 @@ namespace wServer.networking.svrPackets
         public ObjectDef[] NewObjects { get; set; }
         public int[] RemovedObjectIds { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.UPDATE; }
-        }
+        public override PacketID ID => PacketID.UPDATE;
 
         public override Packet CreateInstance()
         {
@@ -42,18 +39,18 @@ namespace wServer.networking.svrPackets
 
         protected override void Write(Client psr, NWriter wtr)
         {
-            wtr.Write((short) Tiles.Length);
+            wtr.Write((short)Tiles.Length);
             foreach (TileData i in Tiles)
             {
                 wtr.Write(i.X);
                 wtr.Write(i.Y);
                 wtr.Write((short) i.Tile);
             }
-            wtr.Write((short) NewObjects.Length);
+            wtr.Write((short)NewObjects.Length);
             foreach (ObjectDef i in NewObjects)
                 i.Write(psr, wtr);
 
-            wtr.Write((short) RemovedObjectIds.Length);
+            wtr.Write((short)RemovedObjectIds.Length);
             foreach (int i in RemovedObjectIds)
                 wtr.Write(i);
         }

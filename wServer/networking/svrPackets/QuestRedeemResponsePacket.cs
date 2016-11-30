@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.svrPackets
+﻿namespace wServer.networking.svrPackets
 {
     public class QuestRedeemResponsePacket : ServerPacket
     {
         public bool Success { get; set; }
         public string Message { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.QUEST_REDEEM_RESPONSE; }
-        }
+        public override PacketID ID => PacketID.QUEST_REDEEM_RESPONSE;
 
         public override Packet CreateInstance()
         {

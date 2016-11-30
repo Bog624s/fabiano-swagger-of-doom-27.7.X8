@@ -107,15 +107,15 @@ namespace wServer.realm.entities.player
             {
                 pkts.Add(new ShowEffectPacket
                 {
-                    EffectType = EffectType.Potion,
-                    TargetId = player.Id,
+                    EffectType = EffectType.Heal,
+                    TargetObjectId = player.Id,
                     Color = new ARGB(0xffffffff)
                 });
                 pkts.Add(new NotificationPacket
                 {
                     Color = new ARGB(0xff00ff00),
                     ObjectId = player.Id,
-                    Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + (newHp - player.HP) + "\"}}"
+                    Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + (newHp - player.HP) + "\"}}"
                     //"+" + (newHp - player.HP)
                 });
                 player.HP = newHp;
@@ -131,15 +131,15 @@ namespace wServer.realm.entities.player
             {
                 pkts.Add(new ShowEffectPacket
                 {
-                    EffectType = EffectType.Potion,
-                    TargetId = player.Id,
+                    EffectType = EffectType.Heal,
+                    TargetObjectId = player.Id,
                     Color = new ARGB(0x6084e0)
                 });
                 pkts.Add(new NotificationPacket
                 {
                     Color = new ARGB(0x6084e0),
                     ObjectId = player.Id,
-                    Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + (newMp - player.Mp) + "\"}}"
+                    Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + (newMp - player.Mp) + "\"}}"
                 });
                 player.Mp = newMp;
                 player.UpdateCount++;
@@ -191,8 +191,8 @@ namespace wServer.realm.entities.player
                     if (enemy.Owner == null) return;
                     w.BroadcastPacket(new ShowEffectPacket
                     {
-                        EffectType = EffectType.Dead,
-                        TargetId = enemy.Id,
+                        EffectType = EffectType.Poison,
+                        TargetObjectId = enemy.Id,
                         Color = new ARGB(0xffddff00)
                     }, null);
 
@@ -322,7 +322,7 @@ namespace wServer.realm.entities.player
                                 time.TotalElapsedMs, target, (float)(i * (Math.PI * 2) / 20));
                             Owner.EnterWorld(proj);
                             FameCounter.Shoot(proj);
-                            batch[i] = new Shoot2Packet()
+                            batch[i] = new ServerPlayerShootPacket()
                             {
                                 BulletId = proj.ProjectileId,
                                 OwnerId = Id,
@@ -335,9 +335,9 @@ namespace wServer.realm.entities.player
                         Random.CurrentSeed = s;
                         batch[20] = new ShowEffectPacket()
                         {
-                            EffectType = EffectType.Trail,
+                            EffectType = EffectType.Line,
                             PosA = target,
-                            TargetId = Id,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xFFFF00AA)
                         };
                         BroadcastSync(batch, p => this.Dist(p) < 35);
@@ -382,8 +382,8 @@ namespace wServer.realm.entities.player
                         }));
                         Owner.BroadcastPacket(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Potion,
-                            TargetId = Id,
+                            EffectType = EffectType.Heal,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xffffffff)
                         }, null);
                     }
@@ -432,8 +432,8 @@ namespace wServer.realm.entities.player
                             });
                             BroadcastSync(new ShowEffectPacket()
                             {
-                                EffectType = EffectType.AreaBlast,
-                                TargetId = Id,
+                                EffectType = EffectType.Nova,
+                                TargetObjectId = Id,
                                 Color = new ARGB(0xffffffff),
                                 PosA = new Position() { X = rangeSBA }
                             }, p => this.Dist(p) < 25);
@@ -463,8 +463,8 @@ namespace wServer.realm.entities.player
                         });
                         Owner.BroadcastPacket(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(color),
                             PosA = new Position {X = 2F}
                         }, null);
@@ -503,8 +503,8 @@ namespace wServer.realm.entities.player
 
                         BroadcastSync(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(color),
                             PosA = new Position {X = rangeCEA}
                         }, p => this.Dist(p) < 25);
@@ -533,8 +533,8 @@ namespace wServer.realm.entities.player
                         this.Aoe(rangeHN, true, player => { ActivateHealHp(player as Player, amountHN, pkts); });
                         pkts.Add(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xffffffff),
                             PosA = new Position {X = rangeHN}
                         });
@@ -556,8 +556,8 @@ namespace wServer.realm.entities.player
                         this.Aoe(eff.Range/2, true, player => { ActivateHealMp(player as Player, eff.Amount, pkts); });
                         pkts.Add(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xffffffff),
                             PosA = new Position {X = eff.Range}
                         });
@@ -583,7 +583,7 @@ namespace wServer.realm.entities.player
                             new ShowEffectPacket
                             {
                                 EffectType = EffectType.Teleport,
-                                TargetId = Id,
+                                TargetObjectId = Id,
                                 PosA = new Position
                                 {
                                     X = X,
@@ -600,16 +600,16 @@ namespace wServer.realm.entities.player
                         List<Packet> pkts = new List<Packet>();
                         pkts.Add(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Trail,
-                            TargetId = Id,
+                            EffectType = EffectType.Line,
+                            TargetObjectId = Id,
                             PosA = target,
                             Color = new ARGB(0xFFFF0000)
                         });
                         pkts.Add(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Diffuse,
+                            EffectType = EffectType.Burst,
                             Color = new ARGB(0xFFFF0000),
-                            TargetId = Id,
+                            TargetObjectId = Id,
                             PosA = target,
                             PosB = new Position {X = target.X + eff.Radius, Y = target.Y}
                         });
@@ -638,7 +638,7 @@ namespace wServer.realm.entities.player
                                 pkts.Add(new ShowEffectPacket
                                 {
                                     EffectType = EffectType.Flow,
-                                    TargetId = b.Id,
+                                    TargetObjectId = b.Id,
                                     PosA = new Position {X = a.X, Y = a.Y},
                                     Color = new ARGB(0xffffffff)
                                 });
@@ -654,7 +654,7 @@ namespace wServer.realm.entities.player
                         {
                             EffectType = EffectType.Throw,
                             Color = new ARGB(0xff9000ff),
-                            TargetId = Id,
+                            TargetObjectId = Id,
                             PosA = target
                         }, p => this.Dist(p) < 25);
                         Owner.Timers.Add(new WorldTimer(1500, (world, t) =>
@@ -677,8 +677,8 @@ namespace wServer.realm.entities.player
 
                         pkts.Add(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Concentrate,
-                            TargetId = Id,
+                            EffectType = EffectType.Collapse,
+                            TargetObjectId = Id,
                             PosA = target,
                             PosB = new Position {X = target.X + 3, Y = target.Y},
                             Color = new ARGB(0xFF00D0)
@@ -695,7 +695,7 @@ namespace wServer.realm.entities.player
                                     {
                                         ObjectId = enemy.Id,
                                         Color = new ARGB(0xff00ff00),
-                                        Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Immune\"}}"
+                                        Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Immune\"}}"
                                     });
                                 }
                             }
@@ -718,7 +718,7 @@ namespace wServer.realm.entities.player
                                 {
                                     ObjectId = enemy.Id,
                                     Color = new ARGB(0xffff0000),
-                                    Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Stasis\"}}"
+                                    Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"Stasis\"}}"
                                 });
                             }
                         });
@@ -783,7 +783,7 @@ namespace wServer.realm.entities.player
                             pkts.Add(new ShowEffectPacket
                             {
                                 EffectType = EffectType.Lightning,
-                                TargetId = prev.Id,
+                                TargetObjectId = prev.Id,
                                 Color = new ARGB(0xffff0088),
                                 PosA = new Position
                                 {
@@ -805,7 +805,7 @@ namespace wServer.realm.entities.player
                             {
                                 EffectType = EffectType.Throw,
                                 Color = new ARGB(0xffddff00),
-                                TargetId = Id,
+                                TargetObjectId = Id,
                                 PosA = target
                             }, p => this.Dist(p) < 25);
                             Placeholder x = new Placeholder(Manager, 1500);
@@ -817,9 +817,9 @@ namespace wServer.realm.entities.player
                                 {
                                     world.BroadcastPacket(new ShowEffectPacket
                                     {
-                                        EffectType = EffectType.AreaBlast,
+                                        EffectType = EffectType.Nova,
                                         Color = new ARGB(0xffddff00),
-                                        TargetId = x.Id,
+                                        TargetObjectId = x.Id,
                                         PosA = new Position { X = eff.Radius }
                                     }, null);
                                     world.Aoe(target, eff.Radius, false,
@@ -842,8 +842,8 @@ namespace wServer.realm.entities.player
                         this.Aoe(eff.Range/2, true, player => { ApplyConditionEffect(NegativeEffs); });
                         BroadcastSync(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xffffffff),
                             PosA = new Position {X = eff.Range/2}
                         }, p => this.Dist(p) < 25);
@@ -855,8 +855,8 @@ namespace wServer.realm.entities.player
                         ApplyConditionEffect(NegativeEffs);
                         Owner.BroadcastPacket(new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
-                            TargetId = Id,
+                            EffectType = EffectType.Nova,
+                            TargetObjectId = Id,
                             Color = new ARGB(0xffffffff),
                             PosA = new Position {X = 1}
                         }, null);
@@ -896,10 +896,10 @@ namespace wServer.realm.entities.player
                         Packet[] packets = new Packet[3];
                         packets[0] = new ShowEffectPacket
                         {
-                            EffectType = EffectType.AreaBlast,
+                            EffectType = EffectType.Nova,
                             Color = new ARGB(0xFFFFFF),
                             PosA = new Position { X = 5 },
-                            TargetId = Id
+                            TargetObjectId = Id
                         };
                         if (portal == null) break;
 
@@ -908,7 +908,7 @@ namespace wServer.realm.entities.player
                         packets[1] = new NotificationPacket
                         {
                             Color = new ARGB(0x00FF00),
-                            Text =
+                            Message =
                                 "{\"key\":\"blank\",\"tokens\":{\"data\":\"Unlocked by " +
                                 Name + "\"}}",
                             ObjectId = Id
@@ -945,7 +945,7 @@ namespace wServer.realm.entities.player
                         w.BroadcastPacket(new NotificationPacket
                         {
                             Color = c,
-                            Text =
+                            Message =
                                 "{\"key\":\"blank\",\"tokens\":{\"data\":\"" + DungName + " opened by " +
                                 Client.Account.Name + "\"}}",
                             ObjectId = Client.Player.Id
@@ -1034,7 +1034,7 @@ namespace wServer.realm.entities.player
                                 cmd.ExecuteNonQuery();
                                 SendInfo(
                                     "New skin unlocked successfully. Change skins in your Vault, or start a new character to use.");
-                                Client.SendPacket(new UnlockedSkinPacket
+                                Client.SendPacket(new ReskinUnlockPacket
                                 {
                                     SkinID = item.ActivateEffects[0].SkinType
                                 });
@@ -1112,7 +1112,7 @@ namespace wServer.realm.entities.player
                         Client.SendPacket(new NotificationPacket
                         {
                             Color = new ARGB(0x00FF00),
-                            Text =
+                            Message =
                                 "{\"key\":\"blank\",\"tokens\":{\"data\":\"" + portalDesc.DungeonName + " opened by " +
                                 Client.Account.Name + "\"}}",
                             ObjectId = Client.Player.Id
@@ -1167,7 +1167,7 @@ namespace wServer.realm.entities.player
                         BroadcastSync(new ShowEffectPacket()
                         {
                             EffectType = (EffectType)eff.VisualEffect,
-                            TargetId = Id,
+                            TargetObjectId = Id,
                             Color = new ARGB(eff.Color ?? 0xffffffff),
                             PosA = centerPlayer ? new Position { X = range } : target,
                             PosB = new Position(target.X - range, target.Y) //Its the range of the diffuse effect

@@ -43,21 +43,21 @@ namespace wServer.logic.behaviors.Drakes
                                 entity.UpdateCount++;
                                 entity.Owner.BroadcastPacket(new ShowEffectPacket
                                 {
-                                    EffectType = EffectType.Potion,
-                                    TargetId = entity.Id,
+                                    EffectType = EffectType.Heal,
+                                    TargetObjectId = entity.Id,
                                     Color = new ARGB(0xFFFFFF)
                                 }, null);
                                 entity.Owner.BroadcastPacket(new ShowEffectPacket
                                 {
-                                    EffectType = EffectType.Trail,
-                                    TargetId = host.Id,
+                                    EffectType = EffectType.Line,
+                                    TargetObjectId = host.Id,
                                     PosA = new Position { X = entity.X, Y = entity.Y },
                                     Color = new ARGB(0xFFFFFF)
                                 }, null);
                                 entity.Owner.BroadcastPacket(new NotificationPacket
                                 {
                                     ObjectId = entity.Id,
-                                    Text = "+" + n,
+                                    Message = "+" + n,
                                     Color = new ARGB(0xff00ff00)
                                 }, null);
                             }

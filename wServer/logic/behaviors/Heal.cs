@@ -46,14 +46,14 @@ namespace wServer.logic.behaviors
                         entity.UpdateCount++;
                         entity.Owner.BroadcastPacket(new ShowEffectPacket
                         {
-                            EffectType = EffectType.Potion,
-                            TargetId = entity.Id,
+                            EffectType = EffectType.Heal,
+                            TargetObjectId = entity.Id,
                             Color = new ARGB(0xffffffff)
                         }, null);
                         entity.Owner.BroadcastPacket(new NotificationPacket
                         {
                             ObjectId = entity.Id,
-                            Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
+                            Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
                             Color = new ARGB(0xff00ff00)
                         }, null);
                     }
@@ -70,21 +70,21 @@ namespace wServer.logic.behaviors
                             entity.UpdateCount++;
                             entity.Owner.BroadcastPacket(new ShowEffectPacket
                             {
-                                EffectType = EffectType.Potion,
-                                TargetId = entity.Id,
+                                EffectType = EffectType.Heal,
+                                TargetObjectId = entity.Id,
                                 Color = new ARGB(0xffffffff)
                             }, null);
                             entity.Owner.BroadcastPacket(new ShowEffectPacket
                             {
-                                EffectType = EffectType.Trail,
-                                TargetId = host.Id,
+                                EffectType = EffectType.Line,
+                                TargetObjectId = host.Id,
                                 PosA = new Position { X = entity.X, Y = entity.Y },
                                 Color = new ARGB(0xffffffff)
                             }, null);
                             entity.Owner.BroadcastPacket(new NotificationPacket
                             {
                                 ObjectId = entity.Id,
-                                Text = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
+                                Message = "{\"key\":\"blank\",\"tokens\":{\"data\":\"+" + n + "\"}}",
                                 Color = new ARGB(0xff00ff00)
                             }, null);
                         }

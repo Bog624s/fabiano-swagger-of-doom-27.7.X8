@@ -39,7 +39,7 @@ namespace wServer.networking.handlers
                             cmd.Parameters.AddWithValue("@accId", client.Player.AccountId);
                             cmd.Parameters.AddWithValue("@petId", pet.PetId);
                             cmd.ExecuteNonQuery();
-                            client.SendPacket(new UpdatePetPacket
+                            client.SendPacket(new ActivePetUpdatePacket
                             {
                                 PetId = pet.PetId
                             });
@@ -53,7 +53,7 @@ namespace wServer.networking.handlers
                             cmd.ExecuteNonQuery();
                             client.Player.Pet.PlayerOwner = null;
                             client.Player.Pet = null;
-                            client.SendPacket(new UpdatePetPacket
+                            client.SendPacket(new ActivePetUpdatePacket
                             {
                                 PetId = -1
                             });
@@ -64,7 +64,7 @@ namespace wServer.networking.handlers
                             cmd.Parameters.AddWithValue("@accId", client.Player.AccountId);
                             cmd.Parameters.AddWithValue("@petId", pet.PetId);
                             cmd.ExecuteNonQuery();
-                            client.SendPacket(new RemovePetFromListPacket
+                            client.SendPacket(new DeletePetMessagePacket
                             {
                                 PetId = pet.PetId
                             });

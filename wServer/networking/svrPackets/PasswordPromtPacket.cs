@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.svrPackets
+﻿namespace wServer.networking.svrPackets
 {
     public class PasswordPromtPacket : ServerPacket
     {
@@ -14,10 +8,7 @@ namespace wServer.networking.svrPackets
 
         public int CleanPasswordStatus { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.PASSWORD_PROMPT; }
-        }
+        public override PacketID ID => PacketID.PASSWORD_PROMPT;
 
         public override Packet CreateInstance()
         {
