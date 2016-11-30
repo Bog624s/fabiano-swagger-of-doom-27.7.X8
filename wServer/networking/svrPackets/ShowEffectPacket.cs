@@ -17,7 +17,7 @@
 
         protected override void Read(Client psr, NReader rdr)
         {
-            EffectType = (EffectType) rdr.ReadByte();
+            EffectType = (EffectType)rdr.ReadByte();
             TargetObjectId = rdr.ReadInt32();
             PosA = Position.Read(psr, rdr);
             PosB = Position.Read(psr, rdr);

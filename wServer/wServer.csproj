@@ -525,6 +525,7 @@
     <Compile Include="networking\cliPackets\KeyInfoRequestPacket.cs" />
     <Compile Include="networking\svrPackets\KeyInfoResponsePacket.cs" />
     <Compile Include="networking\cliPackets\ReskinPacket.cs" />
+    <Compile Include="logic\behaviors\ThrowProjectile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="air_icon.ico" />
