@@ -49,7 +49,7 @@ namespace wServer.networking.handlers
                 ProjectileDesc prjDesc = item.Projectiles[0]; //Assume only one
                 Projectile prj = client.Player.PlayerShootProjectile(
                     packet.BulletId, prjDesc, item.ObjectType,
-                    packet.Time, packet.Position, packet.Angle);
+                    packet.Time, packet.StartingPosition, packet.Angle);
                 client.Player.Owner.EnterWorld(prj);
                 client.Player.BroadcastSync(new AllyShootPacket
                 {

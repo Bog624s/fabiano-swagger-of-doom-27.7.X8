@@ -4,10 +4,7 @@
     {
         public int Time { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.GOTOACK; }
-        }
+        public override PacketID ID => PacketID.GOTOACK;
 
         public override Packet CreateInstance()
         {

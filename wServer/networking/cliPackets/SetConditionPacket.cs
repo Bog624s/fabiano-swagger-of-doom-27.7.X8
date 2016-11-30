@@ -5,10 +5,7 @@
         public int ConditionEffect { get; set; }
         public float ConditionDuration { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.SETCONDITION; }
-        }
+        public override PacketID ID => PacketID.SETCONDITION;
 
         public override Packet CreateInstance()
         {

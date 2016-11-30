@@ -9,14 +9,14 @@ using wServer.networking.svrPackets;
 
 namespace wServer.networking.handlers
 {
-    internal class TinkerQuestHandler : PacketHandlerBase<TinkerQuestPacket>
+    internal class TinkerQuestHandler : PacketHandlerBase<QuestRedeemPacket>
     {
         public override PacketID ID
         {
             get { return PacketID.QUEST_REDEEM; }
         }
 
-        protected override void HandlePacket(Client client, TinkerQuestPacket packet)
+        protected override void HandlePacket(Client client, QuestRedeemPacket packet)
         {
             using (Database db = new Database())
             {

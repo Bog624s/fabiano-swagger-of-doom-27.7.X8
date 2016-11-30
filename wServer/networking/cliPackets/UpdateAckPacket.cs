@@ -2,10 +2,7 @@
 {
     public class UpdateAckPacket : ClientPacket
     {
-        public override PacketID ID
-        {
-            get { return PacketID.UPDATEACK; }
-        }
+        public override PacketID ID => PacketID.UPDATEACK;
 
         public override Packet CreateInstance()
         {

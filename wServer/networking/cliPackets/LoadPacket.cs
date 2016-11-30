@@ -5,10 +5,7 @@
         public int CharacterId { get; set; }
         public bool IsFromArena { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.LOAD; }
-        }
+        public override PacketID ID => PacketID.LOAD;
 
         public override Packet CreateInstance()
         {

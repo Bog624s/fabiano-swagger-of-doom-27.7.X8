@@ -1,6 +1,6 @@
 ﻿namespace wServer.networking.cliPackets
 {
-    public class AOEAckPacket : ClientPacket
+    public class AoeAckPacket : ClientPacket
     {
         public int Time { get; set; }
         public Position Position { get; set; }
@@ -12,7 +12,7 @@
 
         public override Packet CreateInstance()
         {
-            return new AOEAckPacket();
+            return new AoeAckPacket();
         }
 
         protected override void Read(Client psr, NReader rdr)

@@ -5,10 +5,7 @@
         public int ErrorId { get; set; }
         public string ErrorDescription { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.FAILURE; }
-        }
+        public override PacketID ID => PacketID.FAILURE;
 
         public override Packet CreateInstance()
         {

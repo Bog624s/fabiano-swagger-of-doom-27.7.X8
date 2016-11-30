@@ -5,10 +5,7 @@
         public int ClassType { get; set; }
         public int SkinType { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.CREATE; }
-        }
+		public override PacketID ID => PacketID.CREATE;
 
         public override Packet CreateInstance()
         {
@@ -23,8 +20,8 @@
 
         protected override void Write(Client psr, NWriter wtr)
         {
-            wtr.Write((ushort) ClassType);
-            wtr.Write((ushort) SkinType);
+            wtr.Write((ushort)ClassType);
+            wtr.Write((ushort)SkinType);
         }
     }
 }

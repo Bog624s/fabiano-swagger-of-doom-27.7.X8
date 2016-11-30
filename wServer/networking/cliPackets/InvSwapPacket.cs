@@ -7,10 +7,7 @@
         public ObjectSlot SlotObject1 { get; set; }
         public ObjectSlot SlotObject2 { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.INVSWAP; }
-        }
+        public override PacketID ID => PacketID.INVSWAP;
 
         public override Packet CreateInstance()
         {

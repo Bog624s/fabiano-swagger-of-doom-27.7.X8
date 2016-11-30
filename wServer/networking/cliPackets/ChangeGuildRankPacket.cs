@@ -5,10 +5,7 @@
         public string Name { get; set; }
         public int GuildRank { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.CHANGEGUILDRANK; }
-        }
+		public override PacketID ID => PacketID.CHANGEGUILDRANK;
 
         public override Packet CreateInstance()
         {

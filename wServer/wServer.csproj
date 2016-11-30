@@ -302,7 +302,7 @@
     <Compile Include="networking\Client.cs" />
     <Compile Include="Empty.cs" />
     <Compile Include="networking\cliPackets\ViewQuestsPacket.cs" />
-    <Compile Include="networking\cliPackets\TinkerQuestPacket.cs" />
+    <Compile Include="networking\cliPackets\QuestRedeemPacket.cs" />
     <Compile Include="networking\handlers\BuyHandler.cs" />
     <Compile Include="networking\handlers\ChangeGuildRankPacketHandler.cs" />
     <Compile Include="networking\handlers\CheckCreditsHandler.cs" />
@@ -350,7 +350,7 @@
     <Compile Include="networking\svrPackets\QuestRedeemResponsePacket.cs" />
     <Compile Include="networking\svrPackets\UnlockedSkinPacket.cs" />
     <Compile Include="networking\svrPackets\VerifyEmailDialogPacket.cs" />
-    <Compile Include="networking\cliPackets\PetCommandPacket.cs" />
+    <Compile Include="networking\cliPackets\ActivePetUpdateRequestPacket.cs" />
     <Compile Include="networking\svrPackets\UpdatePetPacket.cs" />
     <Compile Include="networking\svrPackets\HatchEggPacket.cs" />
     <Compile Include="networking\svrPackets\NewAbilityUnlockedPacket.cs" />
@@ -523,6 +523,7 @@
     <Compile Include="Vector2.cs" />
     <Compile Include="wRandom.cs" />
     <Compile Include="networking\handlers\AoEAckHandler.cs" />
+    <Compile Include="networking\cliPackets\KeyInfoRequestPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="air_icon.ico" />

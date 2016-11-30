@@ -11,14 +11,14 @@ using wServer.realm.worlds;
 
 namespace wServer.networking.handlers
 {
-    internal class PetCommandHandler : PacketHandlerBase<PetCommandPacket>
+    internal class PetCommandHandler : PacketHandlerBase<ActivePetUpdateRequestPacket>
     {
         public override PacketID ID
         {
             get { return PacketID.ACTIVE_PET_UPDATE_REQUEST; }
         }
 
-        protected override void HandlePacket(Client client, PetCommandPacket packet)
+        protected override void HandlePacket(Client client, ActivePetUpdateRequestPacket packet)
         {
             client.Manager.Logic.AddPendingAction(t =>
             {
@@ -29,7 +29,7 @@ namespace wServer.networking.handlers
 
                     switch (packet.CommandId)
                     {
-                        case PetCommandPacket.FOLLOW_PET:
+                        case ActivePetUpdateRequestPacket.FOLLOW_PET:
                             if (client.Player.Pet != null) client.Player.Pet.PlayerOwner = null;
                             client.Player.Pet = pet;
                             pet.PlayerOwner = client.Player;
@@ -45,7 +45,7 @@ namespace wServer.networking.handlers
                             });
                             client.Player.SaveToCharacter();
                             break;
-                        case PetCommandPacket.UNFOLLOW_PET:
+                        case ActivePetUpdateRequestPacket.UNFOLLOW_PET:
                             cmd = db.CreateQuery();
                             cmd.CommandText = "UPDATE characters SET petId=-1 WHERE charId=@charId AND accId=@accId;";
                             cmd.Parameters.AddWithValue("@charId", client.Character.CharacterId);
@@ -58,7 +58,7 @@ namespace wServer.networking.handlers
                                 PetId = -1
                             });
                             break;
-                        case PetCommandPacket.RELEASE_PET:
+                        case ActivePetUpdateRequestPacket.RELEASE_PET:
                             cmd = db.CreateQuery();
                             cmd.CommandText = "DELETE FROM pets WHERE petId=@petId AND accId=@accId;";
                             cmd.Parameters.AddWithValue("@accId", client.Player.AccountId);

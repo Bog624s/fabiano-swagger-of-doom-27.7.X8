@@ -6,10 +6,7 @@
         public byte BulletId { get; set; }
         public int ObjectId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.SQUAREHIT; }
-        }
+        public override PacketID ID => PacketID.SQUAREHIT;
 
         public override Packet CreateInstance()
         {

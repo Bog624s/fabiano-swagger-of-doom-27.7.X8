@@ -7,10 +7,7 @@
         public int ObjectId { get; set; }
         public int TargetId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.OTHERHIT; }
-        }
+        public override PacketID ID => PacketID.OTHERHIT;
 
         public override Packet CreateInstance()
         {

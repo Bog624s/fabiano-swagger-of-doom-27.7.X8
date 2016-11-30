@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.cliPackets
+﻿namespace wServer.networking.cliPackets
 {
     public class LeaveArenaPacket : ClientPacket
     {
         public int _li { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ACCEPT_ARENA_DEATH; }
-        }
+        public override PacketID ID => PacketID.ACCEPT_ARENA_DEATH;
 
         public override Packet CreateInstance()
         {

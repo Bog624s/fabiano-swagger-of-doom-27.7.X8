@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.cliPackets
+﻿namespace wServer.networking.cliPackets
 {
     public class ViewQuestsPacket : ClientPacket
     {
-        public override PacketID ID
-        {
-            get { return PacketID.QUEST_FETCH_ASK; }
-        }
+        public override PacketID ID => PacketID.QUEST_FETCH_ASK;
 
         public override Packet CreateInstance()
         {
@@ -20,12 +11,10 @@ namespace wServer.networking.cliPackets
 
         protected override void Read(Client client, NReader rdr)
         {
-            
         }
 
         protected override void Write(Client client, NWriter wtr)
-        {
-            
+        {            
         }
     }
 }

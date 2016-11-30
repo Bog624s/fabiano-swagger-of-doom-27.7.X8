@@ -4,10 +4,7 @@
     {
         public string Name { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.REQUESTTRADE; }
-        }
+        public override PacketID ID => PacketID.REQUESTTRADE;
 
         public override Packet CreateInstance()
         {

@@ -147,8 +147,8 @@ namespace wServer.networking.handlers
                         }
                     }
                     log.Info(@"Client joined world " + world.Id);
-                    if (packet.MapInfo.Length > 0) //Test World
-                        (world as Test).LoadJson(Encoding.Default.GetString(packet.MapInfo));
+                    if (packet.MapJSON.Length > 0) //Test World
+                        (world as Test).LoadJson(Encoding.Default.GetString(packet.MapJSON));
 
                     if (world.IsLimbo)
                         world = world.GetInstance(client);

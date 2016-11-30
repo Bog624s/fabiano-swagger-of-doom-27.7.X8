@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace wServer.networking.cliPackets
+﻿namespace wServer.networking.cliPackets
 {
-    public class TinkerQuestPacket : ClientPacket
+    public class QuestRedeemPacket : ClientPacket
     {
         public ObjectSlot Object { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.QUEST_REDEEM; }
-        }
+        public override PacketID ID => PacketID.QUEST_REDEEM;
 
         public override Packet CreateInstance()
         {
-            return new TinkerQuestPacket();
+            return new QuestRedeemPacket();
         }
 
         protected override void Read(Client client, NReader rdr)

@@ -7,10 +7,7 @@
         public Position ItemUsePos { get; set; }
         public byte UseType { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.USEITEM; }
-        }
+        public override PacketID ID => PacketID.USEITEM;
 
         public override Packet CreateInstance()
         {

@@ -5,10 +5,7 @@
         public int Time { get; set; }
         public Position Position { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.GROUNDDAMAGE; }
-        }
+        public override PacketID ID => PacketID.GROUNDDAMAGE;
 
         public override Packet CreateInstance()
         {

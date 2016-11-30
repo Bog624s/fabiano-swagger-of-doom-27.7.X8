@@ -5,13 +5,10 @@
         public int Time { get; set; }
         public byte BulletId { get; set; }
         public short ContainerType { get; set; }
-        public Position Position { get; set; }
+        public Position StartingPosition { get; set; }
         public float Angle { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.PLAYERSHOOT; }
-        }
+        public override PacketID ID => PacketID.PLAYERSHOOT;
 
         public override Packet CreateInstance()
         {
@@ -23,7 +20,7 @@
             Time = rdr.ReadInt32();
             BulletId = rdr.ReadByte();
             ContainerType = rdr.ReadInt16();
-            Position = Position.Read(psr, rdr);
+            StartingPosition = Position.Read(psr, rdr);
             Angle = rdr.ReadSingle();
         }
 
@@ -32,7 +29,7 @@
             wtr.Write(Time);
             wtr.Write(BulletId);
             wtr.Write(ContainerType);
-            Position.Write(psr, wtr);
+            StartingPosition.Write(psr, wtr);
             wtr.Write(Angle);
         }
     }

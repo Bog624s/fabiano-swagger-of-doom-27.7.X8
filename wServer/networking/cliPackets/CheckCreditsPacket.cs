@@ -2,10 +2,7 @@
 {
     public class CheckCreditsPacket : ClientPacket
     {
-        public override PacketID ID
-        {
-            get { return PacketID.CHECKCREDITS; }
-        }
+		public override PacketID ID => PacketID.CHECKCREDITS;
 
         public override Packet CreateInstance()
         {

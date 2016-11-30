@@ -4,10 +4,7 @@
     {
         public int ObjectId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.TELEPORT; }
-        }
+        public override PacketID ID => PacketID.TELEPORT;
 
         public override Packet CreateInstance()
         {

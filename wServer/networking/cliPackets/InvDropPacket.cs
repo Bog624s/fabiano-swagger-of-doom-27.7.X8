@@ -4,10 +4,7 @@
     {
         public ObjectSlot SlotObject { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.INVDROP; }
-        }
+        public override PacketID ID => PacketID.INVDROP;
 
         public override Packet CreateInstance()
         {

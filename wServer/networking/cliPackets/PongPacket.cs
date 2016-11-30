@@ -5,10 +5,7 @@
         public int Serial { get; set; }
         public int Time { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.PONG; }
-        }
+        public override PacketID ID => PacketID.PONG;
 
         public override Packet CreateInstance()
         {

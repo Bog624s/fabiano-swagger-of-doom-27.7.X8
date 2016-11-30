@@ -4,10 +4,7 @@
     {
         public int SkinId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.RESKIN; }
-        }
+        public override PacketID ID => PacketID.RESKIN;
 
         public override Packet CreateInstance()
         {

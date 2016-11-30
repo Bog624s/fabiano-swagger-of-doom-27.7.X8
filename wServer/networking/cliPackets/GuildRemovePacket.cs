@@ -4,10 +4,7 @@
     {
         public string Name { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.GUILDREMOVE; }
-        }
+        public override PacketID ID => PacketID.GUILDREMOVE;
 
         public override Packet CreateInstance()
         {

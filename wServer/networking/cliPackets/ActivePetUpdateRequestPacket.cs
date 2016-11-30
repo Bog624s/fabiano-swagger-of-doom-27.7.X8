@@ -1,12 +1,16 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#endregion
+
 namespace wServer.networking.cliPackets
 {
-    public class PetCommandPacket : ClientPacket
+    public class ActivePetUpdateRequestPacket : ClientPacket
     {
         public const int FOLLOW_PET = 1;
         public const int UNFOLLOW_PET = 2;
@@ -15,19 +19,16 @@ namespace wServer.networking.cliPackets
         public int CommandId { get; set; }
         public uint PetId { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ACTIVE_PET_UPDATE_REQUEST; }
-        }
+		public override PacketID ID => PacketID.ACTIVE_PET_UPDATE_REQUEST;
 
         public override Packet CreateInstance()
         {
-            return new PetCommandPacket();
+            return new ActivePetUpdateRequestPacket();
         }
 
         protected override void Read(Client client, NReader rdr)
         {
-            CommandId = (int)rdr.ReadByte();
+            CommandId = rdr.ReadByte();
             PetId = (uint)rdr.ReadInt32();
         }
 

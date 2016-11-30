@@ -24,19 +24,19 @@ namespace wServer.networking.handlers
                 client.Player.Flush();
 
                 if (client.Player.HasConditionEffect(ConditionEffectIndex.Paralyzed)) return;
-                if (packet.Position.X == -1 || packet.Position.Y == -1) return;
+                if (packet.NewPosition.X == -1 || packet.NewPosition.Y == -1) return;
 
                 double newX = client.Player.X;
                 double newY = client.Player.Y;
                 
-                if (newX != packet.Position.X)
+                if (newX != packet.NewPosition.X)
                 {
-                    newX = packet.Position.X;
+                    newX = packet.NewPosition.X;
                     client.Player.UpdateCount++;
                 }
-                if (newY != packet.Position.Y)
+                if (newY != packet.NewPosition.Y)
                 {
-                    newY = packet.Position.Y;
+                    newY = packet.NewPosition.Y;
                     client.Player.UpdateCount++;
                 }
 
@@ -50,7 +50,7 @@ namespace wServer.networking.handlers
 
         private static void CheckLabConditions(Entity player, MovePacket packet)
         {
-            var tile = player.Owner.Map[(int) packet.Position.X, (int) packet.Position.Y];
+            var tile = player.Owner.Map[(int) packet.NewPosition.X, (int) packet.NewPosition.Y];
             switch (tile.TileId)
             {
                 //Green water

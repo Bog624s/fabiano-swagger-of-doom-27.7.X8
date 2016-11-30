@@ -4,10 +4,7 @@
     {
         public int Currency { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.ENTER_ARENA; }
-        }
+        public override PacketID ID => PacketID.ENTER_ARENA;
 
         public override Packet CreateInstance()
         {

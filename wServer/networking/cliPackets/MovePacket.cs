@@ -4,13 +4,10 @@
     {
         public int TickId { get; set; }
         public int Time { get; set; }
-        public Position Position { get; set; }
+        public Position NewPosition { get; set; }
         public TimedPosition[] Records { get; set; }
 
-        public override PacketID ID
-        {
-            get { return PacketID.MOVE; }
-        }
+        public override PacketID ID => PacketID.MOVE;
 
         public override Packet CreateInstance()
         {
@@ -21,7 +18,7 @@
         {
             TickId = rdr.ReadInt32();
             Time = rdr.ReadInt32();
-            Position = Position.Read(psr, rdr);
+            NewPosition = Position.Read(psr, rdr);
             Records = new TimedPosition[rdr.ReadInt16()];
             for (int i = 0; i < Records.Length; i++)
                 Records[i] = TimedPosition.Read(psr, rdr);
@@ -31,13 +28,13 @@
         {
             wtr.Write(TickId);
             wtr.Write(Time);
-            Position.Write(psr, wtr);
+            NewPosition.Write(psr, wtr);
             if (Records == null)
             {
-                wtr.Write((ushort) 0);
+                wtr.Write((ushort)0);
                 return;
             }
-            wtr.Write((ushort) Records.Length);
+            wtr.Write((ushort)Records.Length);
             foreach (TimedPosition i in Records)
                 i.Write(psr, wtr);
         }
