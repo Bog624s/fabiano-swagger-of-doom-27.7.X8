@@ -19,9 +19,10 @@ namespace wServer.logic.behaviors
         private readonly double range;
         private double? angle;
         private Cooldown coolDown;
+		protected readonly bool throwProjectileEffect;
 
         public TossObject(string child, double range = 5, double? angle = null,
-            Cooldown coolDown = new Cooldown(), int coolDownOffset = 0, bool randomToss = false)
+            Cooldown coolDown = new Cooldown(), int coolDownOffset = 0, bool randomToss = false, bool throwProjectileEffect = false)
         {
             this.child = BehaviorDb.InitGameData.IdToObjectType[child];
             this.range = range;
@@ -29,6 +30,7 @@ namespace wServer.logic.behaviors
             this.coolDown = coolDown.Normalize();
             this.coolDownOffset = coolDownOffset;
             this.randomToss = randomToss;
+			this.throwProjectileEffect = throwProjectileEffect;
         }
 
         protected override void OnStateEntry(Entity host, RealmTime time, ref object state)
@@ -61,13 +63,22 @@ namespace wServer.logic.behaviors
                     X = host.X + (float)(range * Math.Cos(tossAngle.Value)),
                     Y = host.Y + (float)(range * Math.Sin(tossAngle.Value)),
                 };
-                host.Owner.BroadcastPacket(new ShowEffectPacket
-                {
-                    EffectType = EffectType.Throw,
-                    Color = new ARGB(0xffffbf00),
-                    TargetObjectId = host.Id,
-                    PosA = target
-                }, null);
+				if (!throwProjectileEffect)
+	                host.Owner.BroadcastPacket(new ShowEffectPacket
+	                {
+	                    EffectType = EffectType.Throw,
+	                    Color = new ARGB(0xffffbf00),
+	                    TargetObjectId = host.Id,
+	                    PosA = target
+	                }, null);
+				else
+					host.Owner.BroadcastPacket(new ShowEffectPacket
+					{
+						EffectType = EffectType.ThrowProjectile,
+						Color = new ARGB(child),
+						PosA = target,
+						PosB = new Position { X = host.X, Y = host.Y } //host pos.
+					}, null);
                 host.Owner.Timers.Add(new WorldTimer(1500, (world, t) =>
                 {
                     Entity entity = Entity.Resolve(world.Manager, child);
