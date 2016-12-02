@@ -9,121 +9,154 @@ using wServer.realm.entities;
 
 namespace wServer.logic.behaviors
 {
-    public class Shoot : CycleBehavior
-    {
-        //State storage: cooldown timer
+	public class Shoot : CycleBehavior
+	{
+		//State storage: cooldown timer
 
-        protected readonly double angleOffset;
-        protected readonly int coolDownOffset;
-        protected readonly int count;
-        protected readonly double predictive;
-        protected readonly int projectileIndex;
-        protected readonly double radius;
-        protected readonly double shootAngle;
-        protected double? fixedAngle;
-        protected Cooldown coolDown;
-        protected double? defaultAngle;
-
-        public Shoot(double radius, int count = 1, double? shootAngle = null,
-            int projectileIndex = 0, double? fixedAngle = null,
-            double angleOffset = 0, double? defaultAngle = null,
-            double predictive = 0, int coolDownOffset = 0,
-            Cooldown coolDown = new Cooldown())
-        {
-            this.radius = radius;
-            this.count = count;
-            this.shootAngle = count == 1 ? 0 : (shootAngle ?? 360.0/count)*Math.PI/180;
-            this.fixedAngle = fixedAngle*Math.PI/180;
-            this.angleOffset = angleOffset*Math.PI/180;
-            this.defaultAngle = defaultAngle*Math.PI/180;
-            this.projectileIndex = projectileIndex;
-            this.predictive = predictive;
-            this.coolDownOffset = coolDownOffset;
-            this.coolDown = coolDown.Normalize();
-        }
-
-        protected override void OnStateEntry(Entity host, RealmTime time, ref object state)
-        {
-            state = coolDownOffset;
-        }
-
-        private static double Predict(Entity host, Entity target, ProjectileDesc desc)
-        {
-            Position? history = target.TryGetHistory(100);
-            if (history == null)
-                return 0;
-
-            double originalAngle = Math.Atan2(history.Value.Y - host.Y, history.Value.X - host.X);
-            double newAngle = Math.Atan2(target.Y - host.Y, target.X - host.X);
+		protected readonly double angleOffset;
+		protected readonly int coolDownOffset;
+		protected readonly int count;
+		protected readonly double predictive;
+		protected readonly int projectileIndex;
+		protected readonly double radius;
+		protected readonly double shootAngle;
+		protected double? fixedAngle;
+		protected Cooldown coolDown;
+		protected double? defaultAngle;
+		protected bool blastEffect;
+		protected readonly int blastRadius;
+		protected readonly uint blastColor;
+		protected double? blastFixedAngle;
 
 
-            float bulletSpeed = desc.Speed / 100;
-            double angularVelo = (newAngle - originalAngle) / (100 / 1000f);
-            return angularVelo * bulletSpeed;
-        }
+		public Shoot(double radius, int count = 1, double? shootAngle = null,
+			int projectileIndex = 0, double? fixedAngle = null,
+			double angleOffset = 0, double? defaultAngle = null,
+			double predictive = 0, int coolDownOffset = 0,
+			Cooldown coolDown = new Cooldown(),
+			bool blastEffect = false, int blastRadius = 2, uint blastColor = 0xFFFFFF, double? blastFixedAngle = null)
+		{
+			this.radius = radius;
+			this.count = count;
+			this.shootAngle = count == 1 ? 0 : (shootAngle ?? 360.0 / count) * Math.PI / 180;
+			this.fixedAngle = fixedAngle * Math.PI / 180;
+			this.angleOffset = angleOffset * Math.PI / 180;
+			this.defaultAngle = defaultAngle * Math.PI / 180;
+			this.projectileIndex = projectileIndex;
+			this.predictive = predictive;
+			this.coolDownOffset = coolDownOffset;
+			this.coolDown = coolDown.Normalize();
+			this.blastEffect = blastEffect;
+			this.blastRadius = blastRadius;
+			this.blastColor = blastColor;
+			this.blastFixedAngle = blastFixedAngle * Math.PI / 180;
+		}
 
-        protected override void TickCore(Entity host, RealmTime time, ref object state)
-        {
-            if (state == null) return;
-            int cool = (int) state;
-            Status = CycleStatus.NotStarted;
+		protected override void OnStateEntry(Entity host, RealmTime time, ref object state)
+		{
+			state = coolDownOffset;
+		}
 
-            if (cool <= 0)
-            {
-                if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) return;
+		private static double Predict(Entity host, Entity target, ProjectileDesc desc)
+		{
+			Position? history = target.TryGetHistory(100);
+			if (history == null)
+				return 0;
 
-                Entity player = host.GetNearestEntity(radius, null);
-                if (player != null || defaultAngle != null || fixedAngle != null)
-                {
-                    ProjectileDesc desc = host.ObjectDesc.Projectiles[projectileIndex];
+			double originalAngle = Math.Atan2(history.Value.Y - host.Y, history.Value.X - host.X);
+			double newAngle = Math.Atan2(target.Y - host.Y, target.X - host.X);
 
-                    double a = fixedAngle ??
-                               (player == null ? defaultAngle.Value : Math.Atan2(player.Y - host.Y, player.X - host.X));
-                    a += angleOffset;
-                    if (predictive != 0 && player != null)
-                        a += Predict(host, player, desc)*predictive;
 
-                    int dmg;
-                    if (host is Character)
-                        dmg = (host as Character).Random.Next(desc.MinDamage, desc.MaxDamage);
-                    else
-                        dmg = Random.Next(desc.MinDamage, desc.MaxDamage);
+			float bulletSpeed = desc.Speed / 100;
+			double angularVelo = (newAngle - originalAngle) / (100 / 1000f);
+			return angularVelo * bulletSpeed;
+		}
 
-                    double startAngle = a - shootAngle*(count - 1)/2;
-                    byte prjId = 0;
-                    Position prjPos = new Position {X = host.X, Y = host.Y};
-                    for (int i = 0; i < count; i++)
-                    {
-                        Projectile prj = host.CreateProjectile(
-                            desc, host.ObjectType, dmg, time.TotalElapsedMs,
-                            prjPos, (float) (startAngle + shootAngle*i));
-                        host.Owner.EnterWorld(prj);
-                        if (i == 0)
-                            prjId = prj.ProjectileId;
-                    }
+		protected override void TickCore(Entity host, RealmTime time, ref object state)
+		{
+			if (state == null) return;
+			int cool = (int)state;
+			Status = CycleStatus.NotStarted;
 
-                    host.Owner.BroadcastPacket(new EnemyShootPacket
-                    {
-                        BulletId = prjId,
-                        OwnerId = host.Id,
-                        StartingPosition = prjPos,
-                        Angle = (float)startAngle,
-                        Damage = (short)dmg,
-                        BulletType = (byte)desc.BulletType,
-                        AngleInc = (float)shootAngle,
-                        NumShots = (byte)count,
-                    }, null);
-                }
-                cool = coolDown.Next(Random);
-                Status = CycleStatus.Completed;
-            }
-            else
-            {
-                cool -= time.ElaspedMsDelta;
-                Status = CycleStatus.InProgress;
-            }
+			if (cool <= 0)
+			{
+				if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) return;
 
-            state = cool;
-        }
-    }
+				Entity player = host.GetNearestEntity(radius, null);
+				if (player != null || defaultAngle != null || fixedAngle != null)
+				{
+					ProjectileDesc desc = host.ObjectDesc.Projectiles[projectileIndex];
+
+					double a = fixedAngle ??
+							   (player == null ? defaultAngle.Value : Math.Atan2(player.Y - host.Y, player.X - host.X));
+					a += angleOffset;
+					if (predictive != 0 && player != null)
+						a += Predict(host, player, desc) * predictive;
+
+					int dmg;
+					if (host is Character)
+						dmg = (host as Character).Random.Next(desc.MinDamage, desc.MaxDamage);
+					else
+						dmg = Random.Next(desc.MinDamage, desc.MaxDamage);
+
+					double startAngle = a - shootAngle * (count - 1) / 2;
+					byte prjId = 0;
+					Position prjPos = new Position { X = host.X, Y = host.Y };
+					for (int i = 0; i < count; i++)
+					{
+						Projectile prj = host.CreateProjectile(
+							desc, host.ObjectType, dmg, time.TotalElapsedMs,
+							prjPos, (float)(startAngle + shootAngle * i));
+						host.Owner.EnterWorld(prj);
+						if (i == 0)
+							prjId = prj.ProjectileId;
+					}
+					Position target;
+					if (blastFixedAngle != null)
+						target = new Position
+						{
+							X = host.X + (float)(Math.Cos(blastFixedAngle.Value)),
+							Y = host.Y + (float)(Math.Sin(blastFixedAngle.Value)),
+						};
+					else
+						target = new Position
+						{
+							X = player.X,
+							Y = player.Y,
+						};
+					if (blastEffect)
+					{
+						host.Owner.BroadcastPacket(new ShowEffectPacket
+						{
+							EffectType = EffectType.Coneblast,
+							Color = new ARGB(blastColor),
+							TargetObjectId = host.Id,
+							PosA = target,
+							PosB = new Position { X = blastRadius }, //radius
+						}, null);
+					}
+					host.Owner.BroadcastPacket(new EnemyShootPacket
+					{
+						BulletId = prjId,
+						OwnerId = host.Id,
+						StartingPosition = prjPos,
+						Angle = (float)startAngle,
+						Damage = (short)dmg,
+						BulletType = (byte)desc.BulletType,
+						AngleInc = (float)shootAngle,
+						NumShots = (byte)count,
+					}, null);
+				}
+				cool = coolDown.Next(Random);
+				Status = CycleStatus.Completed;
+			}
+			else
+			{
+				cool -= time.ElaspedMsDelta;
+				Status = CycleStatus.InProgress;
+			}
+
+			state = cool;
+		}
+	}
 }
