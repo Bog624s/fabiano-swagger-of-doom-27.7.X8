@@ -559,10 +559,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="log4net_wServer.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -612,9 +608,6 @@
     <EmbeddedResource Include="realm\worlds\maps\spriteworld.wmap" />
     <EmbeddedResource Include="realm\worlds\maps\nexus_winter.jm" />
     <EmbeddedResource Include="realm\worlds\maps\nexus_summer.jm" />
-    <None Include="wServer.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

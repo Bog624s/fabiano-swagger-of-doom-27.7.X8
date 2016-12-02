@@ -37,12 +37,12 @@ namespace server
 
         private static void Main(string[] args)
         {
-            XmlConfigurator.ConfigureAndWatch(new FileInfo("log4net_server.config"));
+            XmlConfigurator.ConfigureAndWatch(new FileInfo("resources/config/log4net_server.config"));
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Thread.CurrentThread.Name = "Entry";
 
-            Settings = new SimpleSettings("server");
+            Settings = new SimpleSettings("resources/config/server");
             Database = new Database(
                 Settings.GetValue<string>("db_host", "127.0.0.1"),
                 Settings.GetValue<string>("db_database", "rotmgprod"),

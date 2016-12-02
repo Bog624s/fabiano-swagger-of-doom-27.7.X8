@@ -11,7 +11,7 @@ using wServer.networking.svrPackets;
 using wServer.realm;
 using wServer.realm.entities.player;
 using System.Threading.Tasks;
-using db.JsonObjects;
+using db.JsonObjects; 
 
 #endregion
 
@@ -61,6 +61,8 @@ namespace wServer.networking
         public ProtocalStage Stage { get; internal set; }
 
         public Player Player { get; internal set; }
+
+		public IP IP { get; private set; }
 
         public wRandom Random { get; internal set; }
         public string ConnectedBuild { get; internal set; }
@@ -148,7 +150,8 @@ namespace wServer.networking
                 try
                 {
                     log.Debug("Saving character...");
-					if (w != null) db.UpdateLastSeen(account.AccountId, character.CharacterId, w);
+					if (w != null)
+						db.UpdateLastSeen(account.AccountId, character.CharacterId, w);
 					db.SaveCharacter(account, character);
 					db.UnlockAccount(account);
                 }

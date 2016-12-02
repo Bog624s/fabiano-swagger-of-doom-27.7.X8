@@ -4,13 +4,10 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="wServer\logic\behaviors\Flash.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="wServer\Program.cs">
     <Files>
-      <File FileName="wServer\Structures.cs" Line="200" Column="24" />
-      <File FileName="wServer\logic\behaviors\ThrowProjectile.cs" Line="23" Column="4" />
-      <File FileName="wServer\logic\db\BehaviorDb.PirateCave.cs" Line="152" Column="12" />
-      <File FileName="wServer\logic\behaviors\Shoot.cs" Line="102" Column="40" />
-      <File FileName="wServer\logic\behaviors\Flash.cs" Line="14" Column="36" />
+      <File FileName="server\Program.cs" Line="46" Column="37" />
+      <File FileName="wServer\Program.cs" Line="27" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.server PreferredExecutionTarget="MonoDevelop.Default" />

@@ -1287,7 +1287,7 @@ VALUES(@accId, @petId, @objType, @skinName, @skin, @rarity, @maxLevel, @abilitie
             return ret;
         }
 
-        public void UpdateLastSeen(string accId, int charId, string location)
+		public void UpdateLastSeen(string accId, int charId, string location)
         {
             string currentDate = DateTime.UtcNow.ToString("yyyy-MM-dd:HH-mm-ss");
             MySqlCommand cmd = CreateQuery();
@@ -1304,6 +1304,15 @@ VALUES(@accId, @petId, @objType, @skinName, @skin, @rarity, @maxLevel, @abilitie
             cmd.Parameters.AddWithValue("@charId", charId);
             cmd.ExecuteScalar();
         }
+
+		public void UpdateLastIP(string accId, string lastip)
+		{
+			MySqlCommand cmd = CreateQuery();
+			cmd.CommandText = "UPDATE accounts SET lastip=@lastip WHERE id=@accId;";
+			cmd.Parameters.AddWithValue("@lastip", lastip);
+			cmd.Parameters.AddWithValue("@accId", accId);
+			cmd.ExecuteScalar();
+		}
 
         public bool CheckAccountInUse(Account acc, ref int? timeout)
         {

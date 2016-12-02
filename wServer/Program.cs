@@ -32,12 +32,12 @@ namespace wServer
             Console.Title = "Fabiano Swagger of Doom - World Server";
             try
             {
-                XmlConfigurator.ConfigureAndWatch(new FileInfo("log4net_wServer.config"));
+                XmlConfigurator.ConfigureAndWatch(new FileInfo("resources/config/log4net_wServer.config"));
 
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
                 Thread.CurrentThread.Name = "Entry";
 
-                Settings = new SimpleSettings("wServer");
+                Settings = new SimpleSettings("resources/config/wServer");
                 new Database(
                     Settings.GetValue<string>("db_host", "127.0.0.1"),
                     Settings.GetValue<string>("db_database", "rotmgprod"),
