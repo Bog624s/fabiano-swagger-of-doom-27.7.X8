@@ -10,6 +10,8 @@ using System.Net.Sockets;
 using log4net;
 using System.Text;
 using wServer.networking.svrPackets;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 #endregion
 
@@ -18,7 +20,7 @@ namespace wServer.networking
     //hackish code
     internal class NetworkHandler : IDisposable
     {
-        public const int BUFFER_SIZE = int.MaxValue / 4096;
+        public const int BUFFER_SIZE = 0x10000;
         private static readonly ILog log = LogManager.GetLogger(typeof (NetworkHandler));
         private readonly Client parent;
         private readonly ConcurrentQueue<Packet> pendingPackets = new ConcurrentQueue<Packet>();
@@ -32,6 +34,11 @@ namespace wServer.networking
         private SocketAsyncEventArgs send;
         private byte[] sendBuff;
         private SendState sendState = SendState.Awaiting;
+
+		private bool disposed;
+		private bool disposeCalled;
+		private int m_recvOperating;
+		private int m_sendOperating;
 
         public NetworkHandler(Client parent, Socket skt)
         {
@@ -77,6 +84,11 @@ namespace wServer.networking
 
         private void ReceiveCompleted(object sender, SocketAsyncEventArgs e)
         {
+			m_recvOperating = 0;
+
+			if (disposeCalled)
+				Dispose();
+			
             try
             {
                 if (!skt.Connected)
@@ -165,9 +177,14 @@ namespace wServer.networking
 
         private void SendCompleted(object sender, SocketAsyncEventArgs e)
         {
+			m_sendOperating = 0;
+
+			if (disposeCalled)
+				Dispose();
+			
             try
             {
-                if (!skt.Connected) return;
+				if (!skt.Connected || disposed) return;
 
                 int len;
                 switch (sendState)
@@ -298,12 +315,27 @@ namespace wServer.networking
 
         public void Dispose()
         {
-            send.Completed -= SendCompleted;
-            send.Dispose();
-            sendBuff = null;
-            receive.Completed -= ReceiveCompleted;
-            receive.Dispose();
-            receiveBuff = null;
+			disposeCalled = true;
+			if (Interlocked.Exchange(ref m_sendOperating, 1) != 0 || Interlocked.Exchange(ref m_recvOperating, 1) != 0 || disposed)
+				return;
+			disposed = true;
+			if (send != null)
+			{
+				send.Completed -= SendCompleted;
+				send.Dispose();
+				sendBuff = null;
+			}
+			if (receive != null)
+			{
+				receive.Completed -= ReceiveCompleted;
+				receive.Dispose();
+				receiveBuff = null;
+			}
+			sendBuff = null;
+			receiveBuff = null;
+			send = null;
+			receive = null;
+			skt?.Dispose();
         }
     }
 }
