@@ -20,14 +20,14 @@ namespace server.account
     {
         protected override void HandleRequest()
         {
-            if (Query["ignore"] == null || !String.IsNullOrWhiteSpace(Query["entrytag"]) || String.IsNullOrWhiteSpace(Query["isAgeVerified"]) || !Query["newGUID"].Contains("@"))
+			if (Query["ignore"] == null || !String.IsNullOrWhiteSpace(Query["entrytag"]) || String.IsNullOrWhiteSpace(Query["isAgeVerified"]) || !Query["newGUID"].Contains("@"))
             {
                 using (StreamWriter wtr = new StreamWriter(Context.Response.OutputStream))
                     wtr.Write("<Error>WebRegister.invalid_email_address</Error>");
                 return;
             }
 
-            if (Query.AllKeys.Length != 6)
+            if (Query.AllKeys.Length != 7)
             {
                 using (StreamWriter wtr = new StreamWriter(Context.Response.OutputStream))
                     wtr.Write("<Error>WebRegister.invalid_email_address</Error>");
