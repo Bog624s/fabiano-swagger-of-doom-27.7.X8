@@ -18,6 +18,7 @@ namespace wServer.realm.worlds
             Id = TEST_ID;
             Name = "Test";
             Background = 0;
+			Dungeon = true;
         }
 
         public void LoadJson(string json)
