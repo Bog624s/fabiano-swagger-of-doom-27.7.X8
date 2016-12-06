@@ -46,6 +46,12 @@ namespace wServer.logic.behaviors
                     X = host.X + (float) (range*Math.Cos(angle.Value)),
                     Y = host.Y + (float) (range*Math.Sin(angle.Value)),
                 };
+				Wmap map = host.Owner.Map;
+				WmapTile tile = map[(int)target.X, (int)target.Y];
+				if (host.Manager.GameData.Tiles[tile.TileId].NoWalk)
+					return;
+				if (target.X < 0 || target.Y < 0)
+					return;
                 host.Owner.Timers.Add(new WorldTimer(0, (world, t) =>
                 {
                     Entity entity = Entity.Resolve(world.Manager, child);

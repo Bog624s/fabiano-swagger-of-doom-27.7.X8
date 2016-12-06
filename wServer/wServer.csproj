@@ -118,6 +118,7 @@
     <Reference Include="zlib.net">
       <HintPath>..\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeneratorCache.cs" />
@@ -509,7 +510,6 @@
     <Compile Include="networking\svrPackets\ReconnectPacket.cs" />
     <Compile Include="networking\svrPackets\ServerPacket.cs" />
     <Compile Include="networking\svrPackets\ServerPlayerShootPacket.cs" />
-    <Compile Include="networking\svrPackets\EnemyShootPacket.cs" />
     <Compile Include="networking\svrPackets\ShowEffectPacket.cs" />
     <Compile Include="networking\svrPackets\TextPacket.cs" />
     <Compile Include="networking\svrPackets\TradeAcceptedPacket.cs" />
@@ -526,6 +526,7 @@
     <Compile Include="networking\svrPackets\KeyInfoResponsePacket.cs" />
     <Compile Include="networking\cliPackets\ReskinPacket.cs" />
     <Compile Include="logic\behaviors\ThrowProjectile.cs" />
+    <Compile Include="networking\svrPackets\EnemyShootPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="air_icon.ico" />

@@ -24,7 +24,11 @@ namespace wServer.logic.behaviors
 
         protected override void OnStateEntry(Entity host, RealmTime time, ref object state)
         {
-            host.Move(host.X + Random.Next(minX, maxX), host.Y + Random.Next(minY, maxY));
+			float moveToX = host.X + Random.Next(minX, maxX);
+			float moveToY = host.Y + Random.Next(minY, maxY);
+			if (moveToX < 0 || moveToY < 0)
+				return;
+            host.Move(moveToX, moveToY);
             host.UpdateCount++;
         }
 

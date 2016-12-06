@@ -63,6 +63,12 @@ namespace wServer.logic.behaviors
                     X = host.X + (float)(range * Math.Cos(tossAngle.Value)),
                     Y = host.Y + (float)(range * Math.Sin(tossAngle.Value)),
                 };
+				Wmap map = host.Owner.Map;
+				WmapTile tile = map[(int)target.X, (int)target.Y];
+				if (host.Manager.GameData.Tiles[tile.TileId].NoWalk)
+					return;
+				if (target.X < 0 || target.Y < 0)
+					return;
 				if (!throwProjectileEffect)
 	                host.Owner.BroadcastPacket(new ShowEffectPacket
 	                {

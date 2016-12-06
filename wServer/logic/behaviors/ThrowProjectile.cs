@@ -58,6 +58,8 @@ namespace wServer.logic.behaviors
 					X = host.X + (float)(range * Math.Cos(tossAngle.Value)),
 					Y = host.Y + (float)(range * Math.Sin(tossAngle.Value)),
 				};
+				if (target.X < 0 || target.Y < 0)
+					return;
 				host.Owner.BroadcastPacket(new ShowEffectPacket
 				{
 					EffectType = EffectType.ThrowProjectile,

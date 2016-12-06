@@ -281,7 +281,7 @@ namespace wServer.realm.entities.player
 
         public int[] SlotTypes { get; set; }
 
-        public void Damage(int dmg, Entity chr, Boolean NoDef)
+        public void Damage(int dmg, Entity chr, bool NoDef)
         {
             try
             {
@@ -289,7 +289,7 @@ namespace wServer.realm.entities.player
                     HasConditionEffect(ConditionEffectIndex.Stasis) ||
                     HasConditionEffect(ConditionEffectIndex.Invincible))
                     return;
-
+				
                 dmg = (int)StatsManager.GetDefenseDamage(dmg, NoDef);
                 if (!HasConditionEffect(ConditionEffectIndex.Invulnerable))
                     HP -= dmg;
