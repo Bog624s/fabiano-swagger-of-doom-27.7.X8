@@ -38,6 +38,8 @@ namespace wServer.networking.handlers
             {
                 Entity en1 = client.Player.Owner.GetEntity(packet.SlotObject1.ObjectId);
                 Entity en2 = client.Player.Owner.GetEntity(packet.SlotObject2.ObjectId);
+                if (en1 == null || en2 == null)
+                    return;
                 IContainer con1 = en1 as IContainer;
                 IContainer con2 = en2 as IContainer;
 
@@ -222,11 +224,11 @@ namespace wServer.networking.handlers
                 if (!ret)
                 {
                     log.FatalFormat("Cheat engine detected for player {0},\nInvalid InvSwap. {1} instead of {2}",
-                            client.Player.Name, client.Manager.GameData.Items[packet.SlotObject1.ObjectType].ObjectId, item1.ObjectId);
+                            client.Player.Name, client.Manager.GameData.Items[(ushort)packet.SlotObject1.ObjectType].ObjectId, item1.ObjectId);
                     foreach (Player player in client.Player.Owner.Players.Values)
                         if (player.Client.Account.Rank >= 2)
                             player.SendInfo(String.Format("Cheat engine detected for player {0},\nInvalid InvSwap. {1} instead of {2}",
-                                client.Player.Name, client.Manager.GameData.Items[packet.SlotObject1.ObjectType].ObjectId, item1.ObjectId));
+                                client.Player.Name, client.Manager.GameData.Items[(ushort)packet.SlotObject1.ObjectType].ObjectId, item1.ObjectId));
                 }
             }
             if (con1 is Player && con2 is Player)
@@ -236,11 +238,11 @@ namespace wServer.networking.handlers
                 if (!ret)
                 {
                     log.FatalFormat("Cheat engine detected for player {0},\nInvalid InvSwap. {1} instead of {2}",
-                            client.Player.Name, item1.ObjectId, client.Manager.GameData.Items[packet.SlotObject2.ObjectType].ObjectId);
+                            client.Player.Name, item1.ObjectId, client.Manager.GameData.Items[(ushort)packet.SlotObject2.ObjectType].ObjectId);
                     foreach (Player player in client.Player.Owner.Players.Values)
                         if (player.Client.Account.Rank >= 2)
                             player.SendInfo(String.Format("Cheat engine detected for player {0},\nInvalid InvSwap. {1} instead of {2}",
-                                client.Player.Name, item1.ObjectId, client.Manager.GameData.Items[packet.SlotObject2.ObjectType].ObjectId));
+                                client.Player.Name, item1.ObjectId, client.Manager.GameData.Items[(ushort)packet.SlotObject2.ObjectType].ObjectId));
                 }
             }
 

@@ -145,7 +145,7 @@ namespace wServer
     public struct ObjectSlot
     {
         public int ObjectId;
-        public ushort ObjectType;
+        public int ObjectType;
         public byte SlotId;
 
         public static ObjectSlot Read(Client psr, NReader rdr)
@@ -153,7 +153,7 @@ namespace wServer
             ObjectSlot ret = new ObjectSlot();
             ret.ObjectId = rdr.ReadInt32();
             ret.SlotId = rdr.ReadByte();
-            ret.ObjectType = (ushort)rdr.ReadInt16();
+            ret.ObjectType = rdr.ReadInt32();
             return ret;
         }
 
@@ -234,7 +234,7 @@ namespace wServer
         public static ObjectDef Read(Client psr, NReader rdr)
         {
             ObjectDef ret = new ObjectDef();
-            ret.ObjectType = (ushort)rdr.ReadInt16();
+            ret.ObjectType = rdr.ReadUInt16();
             ret.Stats = ObjectStats.Read(psr, rdr);
             return ret;
         }
